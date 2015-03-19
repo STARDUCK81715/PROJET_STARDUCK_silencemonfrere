@@ -11,8 +11,7 @@ public class Elevator_project
 	static class Building
 	{
 		Elevator mainElevator;
-		//short N_FLOORS; // Can't be constant due to hand initialization 
-		Floor[] floors/*=new Floor[N_FLOORS]*/;
+		Floor[] floors;
 	};
 	
 	static class Elevator
@@ -21,8 +20,7 @@ public class Elevator_project
 		short direction=0; //-1,0,1 /!\ 
 		short positionFloor=0;
 		short passengers=0;
-		short N_FLOOR=0;
-		boolean[] waitingList=new boolean[N_FLOOR];
+		boolean[] waitingList;//=new boolean[N_FLOOR];
 	};
 	
 	/*static class List
@@ -33,6 +31,7 @@ public class Elevator_project
 	
 	static class Floor
 	{
+		double probability=0.0;
 		short passengers=-1;
 	};
 	
@@ -41,6 +40,7 @@ public class Elevator_project
 	static Floor CreateNewFloor()
 	{
 		Floor floor = new Floor();
+		floor.probability=Math.random();
 		return floor;
 		
 	}
@@ -54,6 +54,7 @@ public class Elevator_project
 		for(short i=0;i<Nfloor;i++) // function ?
 		{
 			building.floors[i]=CreateNewFloor();
+			
 		}
 		return building;
 	}
@@ -61,7 +62,6 @@ public class Elevator_project
 	static Elevator CreateNewElevator(short Nfloor)
 	{
 		Elevator elevator = new Elevator();
-		//elevator.N_FLOOR=Nfloor;
 		elevator.waitingList=new boolean[Nfloor];
 		
 		for(short i=0;i<Nfloor;i++)//function ?
@@ -71,13 +71,33 @@ public class Elevator_project
 		}
 		return elevator;
 	}
-		
+	
+	static short TestFloors(short nFloor)
+	{
+		while(nFloor<1||nFloor>100)
+		{
+			Ecran.afficher("Please enter a number between 1-100 !: ");
+			nFloor=Clavier.saisirShort();
+		}
+		return nFloor;
+	}
+	
 	public static void main(String args[])
         {
      /*=============INITIAL STATE===============*/
-		/*test*/short n=35;
-		Building buuilding=CreateNewBuilding(n);
 		
-		Ecran.afficher("   ",buuilding.floors[2].passengers,"    ",buuilding.mainElevator.CAPACITY);/*end of test*/
+		short nFloor;
+		Ecran.afficherln("How big is your Building ? (Answer by a number of floors between 1-100): ");
+		nFloor=Clavier.saisirShort();
+		TestFloors(nFloor);
+		Building mainBuilding=CreateNewBuilding(nFloor);
+		/*test*/
+		for(short i=0;i<mainBuilding.floors.length;i++)
+		{
+			Ecran.afficherln(mainBuilding.floors[i].probability);
+		}
+		/*fintest*/
+	/*=============UPDATE==================*/
+		
     }
 };

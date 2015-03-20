@@ -10,13 +10,13 @@ public class Elevator_project
     final static int RESOLUTION=WINDOW_SIZE;
     final static String WINDOW_TITLE="Elevator_simulation";
     final static char QUIT_CHARACTER='q';
-     /* ========================= */
+    /* ========================= */
 
 
     /* ========= CLASS DECLARATION ============== */ 
     static class Building
     {
-	Elevator mainElevator;
+	Elevator elevator;
 	Floor[] floors;
     };
 	
@@ -24,50 +24,41 @@ public class Elevator_project
     {
 	short CAPACITY=-1; // Can't be constant due to hand initialization 
 	short direction=0; //-1,0,1 /!\ 
-	short positionFloor=0;
+        short positionBy3=0;
 	short passengers=0;
 	boolean[] waitingList;
     };
 
     static class Floor
     {
-	double probability=0.0;
-	short passengers=0;
+	double probability=Math.random();
+        int passengers=0;
     };
 	
 	
-    /* =========== INITIALIZATION FUNCTIONS ============ */
-    static Floor createNewFloor(double appearingProbability)
-    // Return a new floor with all members initialized.
-    {
-	Floor floor = new Floor();
-	floor.probability=appearingProbability;
-	return floor;
-		
-    }
-	
-    static Building createNewBuilding(short Nfloor, double appearingProba)
+    /* =========== INITIALIZATION FUNCTIONS ============ */	
+    static Building createNewBuilding(short nFloor)
     // Return a new building with all members initialized.
     {
 	Building building = new Building();
-	building.floors=new Floor[Nfloor];
-	building.mainElevator=createNewElevator(Nfloor);	
+	building.floors=new Floor[nFloor];
+	building.elevator=createNewElevator(nFloor);	
 		
-	for(short i=0;i<Nfloor;i++) // function ?
+	for(short i=0;i<nFloor;i++) // function ?
 	    {
-		building.floors[i]=createNewFloor(appearingProba);
+		building.floors[i]=new Floor();
 			
 	    }
 	return building;
     }
 	
-    static Elevator createNewElevator(short Nfloor)
+    static Elevator createNewElevator(short nFloor)
     // Return a new elevator with all members initialized.
     {
 	Elevator elevator = new Elevator();
-	elevator.waitingList=new boolean[Nfloor];
+	elevator.waitingList=new boolean[nFloor];
 		
-	for(short i=0;i<Nfloor;i++)//function ?
+	for(short i=0;i<nFloor;i++)//function ?
 	    {
 		elevator.waitingList[i]=false;
 	    }
@@ -83,13 +74,6 @@ public class Elevator_project
 	return nFloors;
 
     }
-    static double askForProbabilty()
-    {
-	Ecran.afficherln("Veuillez saisir la probabilité d'apparition d'un nouvel individu à un étage. (entre 0 et 1 ).");
-	double probability=Clavier.saisirDouble();
-	verifyInBetween(probability,0,1);
-	return probability;
-    }
 
     static void verifyInBetween(double number, int min, int max)
     // Ask for a number until the condition is true.
@@ -103,10 +87,63 @@ public class Elevator_project
 
     static void update(Building building)
     {
-	Ecran.afficherln("I updated.");
+	/*
+	  Ajoute les nouvelles personnes à chaque étages
+	  Gestion des appels (building dit a elevator qui attend et ou)
+	  Elevator bouge
+	  Elevator et se charge/décharge
+	*/
+	
+        manageApparition(building);
+	manageCalls(building);
+	updateElevator(building) ; // Va appeler move et décharge
     }
 
+    static void manageApparition(Building building)
+    {
+	for(short i=0;i<building.floors.length;i++)
+	    {
+		Floor currentFloor = building.floors[i];
+		if(tossProbility(currentFloor.probability) == true)
+		    {
+			currentFloor.passengers = currentFloor.passengers + 1;
+		    }
+	    }
+    }
 
+    static boolean tossProbility(double probability)
+    {
+	return Math.random()<=probability;
+    }
+
+    static void manageCalls(Building building)
+    {
+	for(short i=0;i<building.floors.length;i++)
+	    {
+		Floor currentFloor = building.floors[i];
+		if(currentFloor.passengers>0)
+		    {
+			building.elevator.waitingList[i]=true;
+		    }
+		else
+		    {
+			building.elevator.waitingList[i]=false;
+		    }
+	    }
+    }
+
+    static void updateElevator(Building building) 
+    // Move & unstack
+    {
+	moveElevator(building.elevator); // Comme l'élevator sait tout ce qu'il faut pour bouger, on n'a besoin que d'un élévator (et pas d'un building)
+        
+    }
+
+    static void moveElevator(Elevator elevator)
+    {
+	if(elevator.direction == 0)
+	    elevator.positionBy3 +=elevator.direction;
+    }
 
 
 
@@ -144,13 +181,13 @@ public class Elevator_project
 
     static void draw(Building building, EcranGraphique window)
     {
-	Ecran.afficherln("I drew.");
+
     }
 
     public static void main(String args[])
     {
 	/*=============INITIAL STATE===============*/
-	Building building = createNewBuilding(askForNumberFloors(),askForProbabilty());
+	Building building = createNewBuilding(askForNumberFloors());
 	EcranGraphique window = createNewEcranGraphique();
 	while(window.getKey()!=QUIT_CHARACTER) // To quit: just type 'Q' !
 	    {

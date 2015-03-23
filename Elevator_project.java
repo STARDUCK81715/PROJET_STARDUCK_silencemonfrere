@@ -208,12 +208,24 @@ public class Elevator_project
 	Rectangle rectangle = new Rectangle();
 	int lastLevel = elevator.waitingList.length;
 
+	// Elevator
 	rectangle.x = BORDER_GAP + FLOOR_WIDTH;
 	rectangle.y = (lastLevel)*FLOOR_HEIGHT - (1/3.0 * elevator.positionBy3) * FLOOR_HEIGHT - elevator.direction*dt/1000.0 * FLOOR_HEIGHT/3.0;
 	Ecran.afficherln("y: " , rectangle.y);
 	rectangle.width = ELEVATOR_WIDTH;
 	rectangle.height = ELEVATOR_HEIGHT;
 	drawRectangle(rectangle, window, createNewColor(128,0,0)); // Here is the elevator color 
+
+	//Passengers 
+	for(short i=0;i<elevator.passengers;i++)
+	    {
+	        double xOffset=0;
+		double numberMaxInWidth = (rectangle.width / PASSENGER_WIDTH);
+		xOffset = i / numberMaxInWidth;
+		    drawPassenger(rectangle.x+(i%numberMaxInWidth)*PASSENGER_WIDTH+xOffset,rectangle.y+rectangle.height/3.0,window,createNewColor(0,128,255));
+	    }
+
+	
     }
 
     static void drawBuilding(Building building, EcranGraphique window)

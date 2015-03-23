@@ -34,14 +34,14 @@ public class Elevator_project
 	short direction=0; //-1,0,1 /!\ 
         short positionBy3=0;
 	short passengers=0;
-	boolean[] waitingList;
-	boolean[] directionList;
+	short[] waitingList;
+	short[] destinationList;
     };
 
     static class Floor
     {
 	double probability=Math.random(); // TO DO 
-        int passengers=0;
+        short passengers=0;
     };
 	
 	
@@ -65,16 +65,21 @@ public class Elevator_project
     // Return a new elevator with all members initialized.
     {
 	Elevator elevator = new Elevator();
-	elevator.waitingList=new boolean[nFloor];
-	elevator.directionList=new boolean[nFloor];
+	elevator.waitingList=new short[nFloor];
+	elevator.destinationList=new short[nFloor];
 		
 	for(short i=0;i<nFloor;i++)//function ?
 	    {
-		elevator.waitingList[i]=false;
+		elevator.waitingList[i]=0;
+		elevator.destinationList[i]=0;
 	    }
+
+	Ecran.afficherln("Veuillez saisir la capacite max de l'ascenceur.");
+	elevator.CAPACITY = Clavier.saisirShort();
+
 	return elevator;
     }
-
+    
     static short askForNumberFloors()
     // Return a valid number of floors from the user.
     {
@@ -103,7 +108,6 @@ public class Elevator_project
 	  Elevator bouge
 	  Elevator et se charge/décharge
 	*/
-	Ecran.afficherln("Updated");
         manageApparition(building);
 	manageCalls(building);
 	updateElevator(building) ; // Va appeler move et décharge
@@ -116,7 +120,7 @@ public class Elevator_project
 		Floor currentFloor = building.floors[i];
 		if(tossProbility(currentFloor.probability) == true)
 		    {
-			currentFloor.passengers = currentFloor.passengers + 1;
+			currentFloor.passengers += 1;
 		    }
 	    }
     }
@@ -131,29 +135,118 @@ public class Elevator_project
 	for(short i=0;i<building.floors.length;i++)
 	    {
 		Floor currentFloor = building.floors[i];
-		if(currentFloor.passengers>0)
-		    {
-			building.elevator.waitingList[i]=true;
-		    }
-		else
-		    {
-			building.elevator.waitingList[i]=false;
-		    }
+		building.elevator.waitingList[i]=currentFloor.passengers;
 	    }
     }
 
     static void updateElevator(Building building) 
     // Move & unstack
     {
-	moveElevator(building.elevator); // Comme l'élevator sait tout ce qu'il faut pour bouger, on n'a besoin que d'un élévator (et pas d'un building)
+	moveElevator(building.elevator); 
+	if(building.elevator.positionBy3%3 == 0)
+	    {
+		unstackElevator(building.elevator);
+		stackInElevator(building);
+		updateDirection(building.elevator);
+	    }
+	Ecran.afficherln("Direction : ", building.elevator.direction);
+
+	
         
     }
 
     static void moveElevator(Elevator elevator)
     {
+	if((elevator.positionBy3+elevator.direction)/3 <=elevator.waitingList.length-1 && (elevator.positionBy3+elevator.direction)/3 >=0) 
+	    {
+		elevator.positionBy3+=elevator.direction;
+	    }
 	
     }
+    static void unstackElevator(Elevator elevator)
+    {
+	Ecran.afficherln(" Passengers : " , elevator.passengers , ". At floor " , elevator.positionBy3/3, " how many people down : " , elevator.destinationList[elevator.positionBy3/3]);
+	short nbQuit=elevator.destinationList[elevator.positionBy3/3];
+	elevator.passengers-=nbQuit;
+	elevator.destinationList[elevator.positionBy3/3]=0;
+    }
 
+    static void stackInElevator(Building building)
+    {
+	Elevator elevator = building.elevator;
+	Floor currentFloor = building.floors[elevator.positionBy3/3];
+
+	while(elevator.passengers<elevator.CAPACITY && currentFloor.passengers>0)
+	    {
+		currentFloor.passengers-=1;
+		elevator.passengers++;
+		addRandomLocation(elevator);
+	    }
+
+    }
+
+    static void addRandomLocation(Elevator elevator)
+    {
+	short currentPosition = (short)(elevator.positionBy3/3);
+	short randomLocation = -1;
+	do
+	    {
+		randomLocation = (short)(Math.random()*elevator.waitingList.length);
+	    }while(randomLocation==currentPosition);
+	elevator.destinationList[randomLocation]++;
+    }
+
+    static void updateDirection(Elevator elevator)
+    {
+	short newDirection = 0;
+	short position = (short)(elevator.positionBy3/3);
+	
+	if(elevator.direction!=0)
+	    {
+		// First we see in the same direction if there is someone calling the elevator
+		for(short i=(short)(position+signOf(elevator.direction));i<elevator.waitingList.length && i>=0;i+=elevator.direction)
+		    {
+			if(elevator.waitingList[i]>0 || elevator.destinationList[i]>0)
+			    {
+				newDirection = elevator.direction;
+			    }
+		    }
+	
+		// Then if necessary we see in the other direction if there is someone calling the elevator
+		if(newDirection == 0)
+		    {
+			for(short i=(short)(position+signOf((short)(-elevator.direction)));i<elevator.waitingList.length && i>=0;i+= - elevator.direction)
+			    {
+				if(elevator.waitingList[i]>0 || elevator.destinationList[i]>0)
+				    {
+					newDirection = (short)(- elevator.direction);
+				    }
+			    }
+	
+		    }
+		// We change the direction 
+		elevator.direction = newDirection ; 
+	    }
+	else
+	    {
+		for(short i=0;i<elevator.waitingList.length;i++)
+		    {
+			if(elevator.waitingList[i]>0)
+			    {
+				elevator.direction = signOf((short)(i-elevator.positionBy3/3));
+			    }
+		    }
+	    }
+
+    }
+
+    static short signOf(short i)
+    {
+	if(i<0){return -1;}
+	if(i>0){return 1;}
+	if(i==0){return 0;}
+	return 0;
+    }
 
 
     /* ========== VISUAL ================ */
@@ -211,7 +304,6 @@ public class Elevator_project
 	// Elevator
 	rectangle.x = BORDER_GAP + FLOOR_WIDTH;
 	rectangle.y = (lastLevel)*FLOOR_HEIGHT - (1/3.0 * elevator.positionBy3) * FLOOR_HEIGHT - elevator.direction*dt/1000.0 * FLOOR_HEIGHT/3.0;
-	Ecran.afficherln("y: " , rectangle.y);
 	rectangle.width = ELEVATOR_WIDTH;
 	rectangle.height = ELEVATOR_HEIGHT;
 	drawRectangle(rectangle, window, createNewColor(128,0,0)); // Here is the elevator color 

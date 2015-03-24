@@ -239,8 +239,6 @@ public class ElevatorProject
 	int toSecond = 0; // record the wolhe time passed to know when a second passed.
 	while(window.getKey()!=Defines.QUIT_CHARACTER) 
 	    {
-			// Control
-			if(window.getKey()=='s'){Graphics.yOffset--;}
 		loopTime =  System.currentTimeMillis(); // Get the start time
 		
 		if(toSecond >= 1000) // We update the data (and the appearing ratio) every second

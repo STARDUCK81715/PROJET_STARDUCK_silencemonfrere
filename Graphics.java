@@ -3,6 +3,7 @@ public class Graphics
     /* ========== VISUAL ================ */
     // STRUCTURES 
     static int yOffset = 0;
+    static boolean focusOnElevator = true;
 
     static class Rectangle
     {
@@ -42,18 +43,23 @@ public class Graphics
 		Rectangle right = new Rectangle();
 		right.x = Defines.WINDOW_SIZE - Defines.BORDER_GAP - Defines.FLOOR_WIDTH ;
 		right.y =yOffset+ (i+1) * Defines.FLOOR_HEIGHT ; // i+1 in order to see the sky
-
-		drawRectangle(left,window,createNewColor(4,139,154)); // Here is the floor color
-		drawRectangle(right,window,createNewColor(4,139,154));
-		drawPassengersInFloor(left,right,currentFloor.passengers,window);
 		
-		// Drawing the number of passengers
-		String nbPassenger = "Waiting :"+Integer.toString((int)(currentFloor.passengers));
-		drawPanel(left.x+left.width-nbPassenger.length()*Defines.CHAR_WIDTH,left.y + 1/6.0*left.height,nbPassenger,window, createNewColor(150,150,150));
+		if(left.y >= yOffset && left.y <= yOffset + Defines.WINDOW_SIZE ) 
+		    // If the floor is in the window, then we draw it. 
+		    {
+			Ecran.afficherln("Dedans ." , i);
+			drawRectangle(left,window,createNewColor(4,139,154)); // Here is the floor color
+			drawRectangle(right,window,createNewColor(4,139,154));
+			drawPassengersInFloor(left,right,currentFloor.passengers,window);
+		
+			// Drawing the number of passengers
+			String nbPassenger = "Waiting :"+Integer.toString((int)(currentFloor.passengers));
+			drawPanel(left.x+left.width-nbPassenger.length()*Defines.CHAR_WIDTH,left.y + 1/6.0*left.height,nbPassenger,window, createNewColor(150,150,150));
 
-		// Drawing the number of the floor
-		String index = "Floor number:" + Integer.toString((int)(i));
-		drawPanel(right.x+right.width/2-nbPassenger.length()*Defines.CHAR_WIDTH/2,right.y + 1/6.0*right.height,index,window, createNewColor(4,139,154));
+			// Drawing the number of the floor
+			String index = "Floor number:" + Integer.toString((int)(i));
+			drawPanel(right.x+right.width/2-nbPassenger.length()*Defines.CHAR_WIDTH/2,right.y + 1/6.0*right.height,index,window, createNewColor(4,139,154));
+		    }
 
 	    }
 
@@ -169,11 +175,27 @@ public class Graphics
     static void draw(ElevatorProject.Building building, EcranGraphique window, int dt)
     {
 	window.clear();
-	if(window.getKey()=='s'){yOffset-=10;}
+
+	// Control
+	switch(window.getKey())
+	    {
+	    default : break;
+	    case 'o' : {yOffset+=Defines.BASIC_OFFSET;} break;
+	    case 'l' : {yOffset-=Defines.BASIC_OFFSET;} break;
+	    case 'c' : {focusOnElevator = !focusOnElevator;} break;
+	    }
+	//
+
+	// Update
+	//	if(focusOnElevator){yOffset=(int)((building.floors.length)*Defines.FLOOR_HEIGHT - (1/3.0 * building.elevator.positionBy3 - building.elevator.direction*dt/3000.0) * Defines.FLOOR_HEIGHT  * Defines.FLOOR_HEIGHT);}
+	//
+
+	// Draw
 	drawBuilding(building,window); // draw the main square (white)
 	drawFloors(building,window); // draw all the floors (TO DO : adapter la position des floors après 10)
 	drawElevator(building.elevator,window,dt); // draw the elevator regarding the current time
-	Ecran.afficherln(" offset : " , yOffset);
+	//
+
 	window.flush(); // print the drawings 
     }
 

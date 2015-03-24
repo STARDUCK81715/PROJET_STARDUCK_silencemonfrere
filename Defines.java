@@ -18,6 +18,7 @@ public class Defines
     final static double PASSENGER_HEIGHT = 2 * FLOOR_HEIGHT / 3;
     final static int CHAR_WIDTH = 10;
     final static int CHAR_HEIGHT = 15;
+    final static int BASIC_OFFSET = 4;
     /* ========================= */
 
 }

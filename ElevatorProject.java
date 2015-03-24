@@ -129,11 +129,7 @@ public class ElevatorProject
 		unstackElevator(building.elevator);
 		stackInElevator(building);
 		updateDirection(building.elevator);
-	    }
-	Ecran.afficherln("Direction : ", building.elevator.direction);
-
-	
-        
+	    }     
     }
 
     static void moveElevator(Elevator elevator)

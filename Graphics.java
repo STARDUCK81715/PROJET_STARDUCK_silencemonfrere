@@ -2,6 +2,8 @@ public class Graphics
 {
     /* ========== VISUAL ================ */
     // STRUCTURES 
+    static int yOffset = 0;
+
     static class Rectangle
     {
 	double width = Defines.FLOOR_WIDTH ; // Usual floor size
@@ -35,11 +37,11 @@ public class Graphics
 
 		Rectangle left = new Rectangle();
 		left.x = Defines.BORDER_GAP ;
-		left.y = (i+1) * Defines.FLOOR_HEIGHT ; // i+1 in order to see the sky
+		left.y =yOffset+(i+1) * Defines.FLOOR_HEIGHT ; // i+1 in order to see the sky
 
 		Rectangle right = new Rectangle();
 		right.x = Defines.WINDOW_SIZE - Defines.BORDER_GAP - Defines.FLOOR_WIDTH ;
-		right.y = (i+1) * Defines.FLOOR_HEIGHT ; // i+1 in order to see the sky
+		right.y =yOffset+ (i+1) * Defines.FLOOR_HEIGHT ; // i+1 in order to see the sky
 
 		drawRectangle(left,window,createNewColor(4,139,154)); // Here is the floor color
 		drawRectangle(right,window,createNewColor(4,139,154));
@@ -73,14 +75,14 @@ public class Graphics
 
 	// ElevatorProject.Elevator
 	rectangle.x = Defines.BORDER_GAP + Defines.FLOOR_WIDTH+1;
-	rectangle.y = (lastLevel)*Defines.FLOOR_HEIGHT - (1/3.0 * elevator.positionBy3) * Defines.FLOOR_HEIGHT - elevator.direction*dt/1000.0 * Defines.FLOOR_HEIGHT/3.0;
+	rectangle.y = yOffset + (lastLevel)*Defines.FLOOR_HEIGHT - (1/3.0 * elevator.positionBy3) * Defines.FLOOR_HEIGHT - elevator.direction*dt/1000.0 * Defines.FLOOR_HEIGHT/3.0;
 	rectangle.width = Defines.ELEVATOR_WIDTH;
 	rectangle.height = Defines.ELEVATOR_HEIGHT;
 	drawRectangle(rectangle, window, createNewColor(128,0,0)); // Here is the elevator color 
 
 	// Cables
-	window.drawLine((int)(rectangle.x +0.3*rectangle.width) ,(int)(Defines.FLOOR_HEIGHT),(int)(rectangle.x + 0.3*rectangle.width), (int)(rectangle.y));
-	window.drawLine((int)(rectangle.x +0.6*rectangle.width) ,(int)(Defines.FLOOR_HEIGHT),(int)(rectangle.x + 0.6*rectangle.width), (int)(rectangle.y));
+	window.drawLine((int)(rectangle.x +0.3*rectangle.width) ,(int)(yOffset+Defines.FLOOR_HEIGHT),(int)(rectangle.x + 0.3*rectangle.width), (int)(rectangle.y));
+	window.drawLine((int)(rectangle.x +0.6*rectangle.width) ,(int)(yOffset+Defines.FLOOR_HEIGHT),(int)(rectangle.x + 0.6*rectangle.width), (int)(rectangle.y));
 
 	//Passengers 
 	for(short i=0;i<elevator.passengers;i++)
@@ -104,7 +106,7 @@ public class Graphics
 	int nFloors = building.floors.length;
 
 	rectangle.x = Defines.BORDER_GAP -1 ; // -1 to do not draw twice on the same pixel
-	rectangle.y = Defines.FLOOR_HEIGHT -1  ; // same
+	rectangle.y = yOffset + Defines.FLOOR_HEIGHT -1  ; // same
  	rectangle.width = Defines.WINDOW_SIZE - 2 * Defines.BORDER_GAP + 2; // +2 same
 	rectangle.height = Defines.FLOOR_HEIGHT * nFloors;
 	drawRectangle(rectangle, window, createNewColor(255,255,255)); // Here is the building color 
@@ -167,11 +169,11 @@ public class Graphics
     static void draw(ElevatorProject.Building building, EcranGraphique window, int dt)
     {
 	window.clear();
-	
+	if(window.getKey()=='s'){yOffset-=10;}
 	drawBuilding(building,window); // draw the main square (white)
 	drawFloors(building,window); // draw all the floors (TO DO : adapter la position des floors après 10)
 	drawElevator(building.elevator,window,dt); // draw the elevator regarding the current time
-	
+	Ecran.afficherln(" offset : " , yOffset);
 	window.flush(); // print the drawings 
     }
 

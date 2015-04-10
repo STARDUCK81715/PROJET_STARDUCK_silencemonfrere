@@ -81,7 +81,9 @@ public class Graphics
 
 	// ElevatorProject.Elevator
 	rectangle.x = Defines.BORDER_GAP + Defines.FLOOR_WIDTH+1;
-	rectangle.y = yOffset + (lastLevel)*Defines.FLOOR_HEIGHT - (1/3.0 * elevator.positionBy3) * Defines.FLOOR_HEIGHT - elevator.direction*dt/1000.0 * Defines.FLOOR_HEIGHT/3.0;
+
+	rectangle.y = yOffset + Defines.FLOOR_HEIGHT*((lastLevel-(float)(elevator.positionByHeight)/(float)(Defines.FLOOR_HEIGHT_METERS)) - elevator.direction * dt / 1000.0 / Defines.FLOOR_HEIGHT_METERS);
+
 	rectangle.width = Defines.ELEVATOR_WIDTH;
 	rectangle.height = Defines.ELEVATOR_HEIGHT;
 	drawRectangle(rectangle, window, createNewColor(128,0,0)); // Here is the elevator color 
@@ -184,10 +186,6 @@ public class Graphics
 	    case 'l' : {yOffset-=Defines.BASIC_OFFSET;} break;
 	    case 'c' : {focusOnElevator = !focusOnElevator;} break;
 	    }
-	//
-
-	// Update
-	//	if(focusOnElevator){yOffset=(int)((building.floors.length)*Defines.FLOOR_HEIGHT - (1/3.0 * building.elevator.positionBy3 - building.elevator.direction*dt/3000.0) * Defines.FLOOR_HEIGHT  * Defines.FLOOR_HEIGHT);}
 	//
 
 	// Draw

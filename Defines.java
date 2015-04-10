@@ -8,10 +8,11 @@ public class Defines
     final static int RESOLUTION=WINDOW_SIZE;
     final static String WINDOW_TITLE="Elevator_simulation";
     final static char QUIT_CHARACTER='q';
+    final static short FLOOR_HEIGHT_METERS=3;
     // VISUAL
     final static double BORDER_GAP = 0.1 * WINDOW_SIZE ;
     final static double FLOOR_WIDTH = WINDOW_SIZE * 0.35 ;
-    final static double FLOOR_HEIGHT = WINDOW_SIZE * 0.1 ;
+    final static double FLOOR_HEIGHT = 50 * FLOOR_HEIGHT_METERS ; //WINDOW_SIZE * 0.1 ;
     final static double ELEVATOR_WIDTH = WINDOW_SIZE - 2 * FLOOR_WIDTH - 2 * BORDER_GAP - 2  ;
     final static double ELEVATOR_HEIGHT = FLOOR_HEIGHT  ;
     final static double PASSENGER_WIDTH = 2;

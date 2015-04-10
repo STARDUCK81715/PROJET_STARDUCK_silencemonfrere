@@ -13,7 +13,7 @@ public class ElevatorProject
     {
 	short CAPACITY=-1; // Can't be constant due to hand initialization 
 	short direction=0; //-1,0,1 /!\ 
-        short positionBy3=0;
+        short positionByHeight=0;
 	short passengers=0;
 	short[] waitingList;
 	short[] destinationList;
@@ -124,7 +124,7 @@ public class ElevatorProject
     // Move & unstack
     {
 	moveElevator(building.elevator); 
-	if(building.elevator.positionBy3%3 == 0)
+	if(building.elevator.positionByHeight%Defines.FLOOR_HEIGHT_METERS == 0)
 	    {
 		unstackElevator(building.elevator);
 		stackInElevator(building);
@@ -134,24 +134,24 @@ public class ElevatorProject
 
     static void moveElevator(Elevator elevator)
     {
-	if((elevator.positionBy3+elevator.direction)/3 <=elevator.waitingList.length-1 && (elevator.positionBy3+elevator.direction)/3 >=0) 
+	if((elevator.positionByHeight+elevator.direction)/Defines.FLOOR_HEIGHT_METERS <=elevator.waitingList.length-1 && (elevator.positionByHeight+elevator.direction)/Defines.FLOOR_HEIGHT_METERS >=0) 
 	    {
-		elevator.positionBy3+=elevator.direction;
+		elevator.positionByHeight+=elevator.direction;
 	    }
 	
     }
     static void unstackElevator(Elevator elevator)
     {
-	Ecran.afficherln(" Passengers : " , elevator.passengers , ". At floor " , elevator.positionBy3/3, " how many people down : " , elevator.destinationList[elevator.positionBy3/3]);
-	short nbQuit=elevator.destinationList[elevator.positionBy3/3];
+	Ecran.afficherln(" Passengers : " , elevator.passengers , ". At floor " , elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS, " how many people down : " , elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS]);
+	short nbQuit=elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS];
 	elevator.passengers-=nbQuit;
-	elevator.destinationList[elevator.positionBy3/3]=0;
+	elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS]=0;
     }
 
     static void stackInElevator(Building building)
     {
 	Elevator elevator = building.elevator;
-	Floor currentFloor = building.floors[elevator.positionBy3/3];
+	Floor currentFloor = building.floors[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS];
 
 	while(elevator.passengers<elevator.CAPACITY && currentFloor.passengers>0)
 	    {
@@ -164,7 +164,7 @@ public class ElevatorProject
 
     static void addRandomLocation(Elevator elevator)
     {
-	short currentPosition = (short)(elevator.positionBy3/3);
+	short currentPosition = (short)(elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS);
 	short randomLocation = -1;
 	do
 	    {
@@ -176,7 +176,7 @@ public class ElevatorProject
     static void updateDirection(Elevator elevator)
     {
 	short newDirection = 0;
-	short position = (short)(elevator.positionBy3/3);
+	short position = (short)(elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS);
 	
 	if(elevator.direction!=0)
 	    {
@@ -210,7 +210,7 @@ public class ElevatorProject
 		    {
 			if(elevator.waitingList[i]>0 || elevator.destinationList[i]>0)
 			    {
-				elevator.direction = signOf((short)(i-elevator.positionBy3/3));
+				elevator.direction = signOf((short)(i-elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS));
 			    }
 		    }
 	    }

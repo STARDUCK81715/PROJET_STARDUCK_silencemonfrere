@@ -227,9 +227,9 @@ public class ElevatorProject
 		// Then if necessary we see in the other direction if there is someone calling the elevator
 		if(newDirection == 0)
 		    {
-			for(short i=(short)(position+signOf((short)(-elevator.direction)));i<elevator.waitingList.length && i>=0;i+= - elevator.direction)
+			for(short i = (short)(position+signOf((short)(-elevator.direction))); i < elevator.waitingList.length && i >= 0; i -= elevator.direction)
 			    {
-				if(elevator.waitingList[i]>0 || elevator.destinationList[i]>0)
+				if(elevator.waitingList[i] > 0 || elevator.destinationList[i] > 0)
 				    {
 					newDirection = (short)(- elevator.direction);
 				    }
@@ -241,11 +241,11 @@ public class ElevatorProject
 	    }
 	else
 	    {
-		for(short i=0;i<elevator.waitingList.length;i++)
+		for(short i = 0; i < elevator.waitingList.length; i++)
 		    {
-			if(elevator.waitingList[i]>0 || elevator.destinationList[i]>0)
+			if(elevator.waitingList[i] > 0 || elevator.destinationList[i] > 0)
 			    {
-				elevator.direction = signOf((short)(i-elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS));
+				elevator.direction = signOf((short)(i - elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS));
 			    }
 		    }
 	    }
@@ -260,9 +260,9 @@ public class ElevatorProject
 
     static short signOf(short i)
     {
-	if(i<0){return -1;}
-	if(i>0){return 1;}
-	if(i==0){return 0;}
+	if(i < 0){return -1;}
+	if(i > 0){return 1;}
+	if(i == 0){return 0;}
 	return 0;
     }
 
@@ -285,6 +285,7 @@ public class ElevatorProject
 		    } 
 
 		Graphics.draw(building,window,toSecond); // But we draw all the time
+		
 
 		toSecond = System.currentTimeMillis() - (double)loopTime + toSecond; // counting the passed time.
 		

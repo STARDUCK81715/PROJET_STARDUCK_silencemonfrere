@@ -102,8 +102,8 @@ static void drawElevator(ElevatorProject.Elevator elevator, EcranGraphique windo
     drawRectangle(rectangle, window, createNewColor(128,0,0)); // Here is the elevator color 
 
     // Cables
-    window.drawLine((int)(rectangle.x +0.3*rectangle.width) ,(int)(yOffset+Defines.FLOOR_HEIGHT),(int)(rectangle.x + 0.3*rectangle.width), (int)(rectangle.y));
-    window.drawLine((int)(rectangle.x +0.6*rectangle.width) ,(int)(yOffset+Defines.FLOOR_HEIGHT),(int)(rectangle.x + 0.6*rectangle.width), (int)(rectangle.y));
+    window.drawLine((int)(rectangle.x +0.3*rectangle.width), (int)(yOffset+Defines.FLOOR_HEIGHT),(int)(rectangle.x + 0.3*rectangle.width), (int)(rectangle.y));
+    window.drawLine((int)(rectangle.x +0.6*rectangle.width), (int)(yOffset+Defines.FLOOR_HEIGHT),(int)(rectangle.x + 0.6*rectangle.width), (int)(rectangle.y));
 
     //Passengers 
     for(short i = 0; i < elevator.passengers; i++)
@@ -211,7 +211,11 @@ static void draw(ElevatorProject.Building building, EcranGraphique window, doubl
 	case 0 :  break;
 	case 'o' : {viewDirection = -1;} break;
 	case 'l' : {viewDirection = 1;} break;
-	case 'c' : {focusOnElevator = !focusOnElevator;} break;
+	case 'c' : 
+	    {
+		focusOnElevator = !focusOnElevator;
+		yOffset = - building.elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS * Defines.FLOOR_HEIGHT;
+	    } break;
 	}
     //
 

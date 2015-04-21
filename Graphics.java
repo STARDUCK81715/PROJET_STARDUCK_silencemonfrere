@@ -58,7 +58,7 @@ public class Graphics
 		drawPanel(left.x+left.width-nbPassenger.length()*Defines.CHAR_WIDTH,left.y + 1/6.0*left.height,nbPassenger,window, createNewColor(150,150,150));
 
 		// Drawing the number of the floor
-		String index = "Floor number:" + Integer.toString((int)(i));
+		String index = "Floor number:" + Integer.toString((int)(lastLevel - i));
 		drawPanel(right.x+right.width/2-nbPassenger.length()*Defines.CHAR_WIDTH/2,right.y + 1/6.0*right.height,index,window, createNewColor(4,139,154));
 	    }
 

@@ -17,11 +17,14 @@ public class ElevatorProject
 	short passengers=0;
 	short[] waitingList;
 	short[] destinationList;
+
+	long timeAtArrive = 0;
+	long timeToWait = 0;
     };
 
     static class Floor
     {
-	double probability=Math.random(); // TO DO 
+	double probability=Math.random()/10.0;
         short passengers=0;
     };
 	
@@ -102,6 +105,12 @@ public class ElevatorProject
 		if(tossProbility(currentFloor.probability) == true)
 		    {
 			currentFloor.passengers += 1;
+			
+			// Our model has problem if someone appears during his waiting; so we directly add the delay if it happens.
+			if(building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS == i )
+			    {
+				building.elevator.timeToWait += Defines.WAITING_TIME_PER_PASSENGER;
+			    }
 		    }
 	    }
     }
@@ -126,23 +135,49 @@ public class ElevatorProject
 	moveElevator(building.elevator); 
 	if(building.elevator.positionByHeight%Defines.FLOOR_HEIGHT_METERS == 0)
 	    {
+		// Nous sommes à un étage
+		updateElevatorTiming(building);
+		
 		unstackElevator(building.elevator);
 		stackInElevator(building);
 		updateDirection(building.elevator);
 	    }     
     }
 
+    static void updateElevatorTiming(Building building)
+    {
+	if(System.currentTimeMillis() > building.elevator.timeAtArrive + building.elevator.timeToWait)
+	    {
+		// Actualiza the last step
+		building.elevator.timeAtArrive = System.currentTimeMillis();
+	
+		// Update the time to wait
+		int nQuit = building.elevator.destinationList[building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS];
+		int nPossible  = building.elevator.CAPACITY - building.elevator.passengers ;
+		int nEnter = Math.min(nPossible,building.floors[building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS].passengers);
+		building.elevator.timeToWait = Defines.WAITING_TIME_PER_PASSENGER * (nQuit + nEnter);
+
+		// Print it regarding people
+		Ecran.afficherln("nquite : ", nQuit , " nEnter : " , nEnter , " Time total : " , building.elevator.timeToWait ) ; // TO DO : afficher à l'écran.
+	    }
+    }
+
     static void moveElevator(Elevator elevator)
     {
-	if((elevator.positionByHeight+elevator.direction)/Defines.FLOOR_HEIGHT_METERS <=elevator.waitingList.length-1 && (elevator.positionByHeight+elevator.direction)/Defines.FLOOR_HEIGHT_METERS >=0) 
+	if(
+	   (elevator.positionByHeight+elevator.direction)/Defines.FLOOR_HEIGHT_METERS <= elevator.waitingList.length-1  // security
+	   && (elevator.positionByHeight+elevator.direction)/Defines.FLOOR_HEIGHT_METERS >=0 // security
+	   && System.currentTimeMillis() > elevator.timeAtArrive + elevator.timeToWait // nobody is moving
+	   ) 
 	    {
+		Ecran.afficherln("Current time : ",   elevator.timeAtArrive + elevator.timeToWait - System.currentTimeMillis());
 		elevator.positionByHeight+=elevator.direction;
 	    }
 	
     }
     static void unstackElevator(Elevator elevator)
     {
-	Ecran.afficherln(" Passengers : " , elevator.passengers , ". At floor " , elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS, " how many people down : " , elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS]);
+	//	Ecran.afficherln(" Passengers : " , elevator.passengers , ". At floor " , elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS, " how many people down : " , elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS]);
 	short nbQuit=elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS];
 	elevator.passengers-=nbQuit;
 	elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS]=0;
@@ -215,6 +250,12 @@ public class ElevatorProject
 		    }
 	    }
 
+	// If waiting direction = 0 
+	if(System.currentTimeMillis() < elevator.timeToWait + elevator.timeAtArrive)
+	    {
+		elevator.direction = 0;
+	    }
+
     }
 
     static short signOf(short i)
@@ -231,8 +272,8 @@ public class ElevatorProject
 	Building building = createNewBuilding(askForNumberFloors());
 	EcranGraphique window = Graphics.createNewEcranGraphique();
 
-	long loopTime = 0; // record the time passed during a loop
-	int toSecond = 0; // record the wolhe time passed to know when a second passed.
+	long  loopTime = 0; // record the time passed during a loop
+	double toSecond = 0; // record the wolhe time passed to know when a second passed.
 	while(window.getKey()!=Defines.QUIT_CHARACTER) 
 	    {
 		loopTime =  System.currentTimeMillis(); // Get the start time
@@ -245,7 +286,7 @@ public class ElevatorProject
 
 		Graphics.draw(building,window,toSecond); // But we draw all the time
 
-		toSecond = (int)(System.currentTimeMillis() - loopTime) + toSecond; // counting the passed time.
+		toSecond = System.currentTimeMillis() - (double)loopTime + toSecond; // counting the passed time.
 		
 	    }
 	window.exit();

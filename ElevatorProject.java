@@ -11,10 +11,10 @@ public class ElevatorProject
 	
     static class Elevator
     {
-	short CAPACITY=-1; // Can't be constant due to hand initialization 
-	short direction=0; //-1,0,1 /!\ 
-        short positionByHeight=0;
-	short passengers=0;
+	short CAPACITY = -1; // Can't be constant due to hand initialization 
+	short direction = 0; //-1,0,1 /!\ 
+        short positionByHeight = 0;
+	short passengers = 0;
 	short[] waitingList;
 	short[] destinationList;
 
@@ -24,8 +24,8 @@ public class ElevatorProject
 
     static class Floor
     {
-	double probability=Math.random()/10.0;
-        short passengers=0;
+	double probability = Math.random();
+        short passengers = 0;
     };
 	
 	
@@ -99,15 +99,17 @@ public class ElevatorProject
 
     static void manageApparition(Building building)
     {
-	for(short i=0;i<building.floors.length;i++)
+	for(short i=0; i < building.floors.length; i++)
 	    {
 		Floor currentFloor = building.floors[i];
 		if(tossProbility(currentFloor.probability) == true)
 		    {
 			currentFloor.passengers += 1;
 			
-			// Our model has problem if someone appears during his waiting; so we directly add the delay if it happens.
-			if(building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS == i )
+			// Our model has problem if someone appears during his waiting; so we directly add the delay if it happens and if it isn't full.
+			if(
+			   building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS == i 
+			   &&  building.elevator.passengers < building.elevator.CAPACITY)
 			    {
 				building.elevator.timeToWait += Defines.WAITING_TIME_PER_PASSENGER;
 			    }
@@ -210,15 +212,15 @@ public class ElevatorProject
 
     static void updateDirection(Elevator elevator)
     {
-	short newDirection = 0;
-	short position = (short)(elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS);
+	short newDirection = 0; // We keep the initial direciton
+	short position = (short)(elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS);
 	
-	if(elevator.direction!=0)
+	if(elevator.direction != 0)
 	    {
 		// First we see in the same direction if there is someone calling the elevator
-		for(short i=(short)(position+signOf(elevator.direction));i<elevator.waitingList.length && i>=0;i+=elevator.direction)
+		for(short i = (short)(position + signOf(elevator.direction)); i < elevator.waitingList.length && i >= 0; i += elevator.direction)
 		    {
-			if(elevator.waitingList[i]>0 || elevator.destinationList[i]>0)
+			if(elevator.waitingList[i] > 0 || elevator.destinationList[i] > 0)
 			    {
 				newDirection = elevator.direction;
 			    }
@@ -227,7 +229,7 @@ public class ElevatorProject
 		// Then if necessary we see in the other direction if there is someone calling the elevator
 		if(newDirection == 0)
 		    {
-			for(short i = (short)(position+signOf((short)(-elevator.direction))); i < elevator.waitingList.length && i >= 0; i -= elevator.direction)
+			for(short i = (short)(position+signOf((short)(-elevator.direction) )); i < elevator.waitingList.length && i >= 0; i -= elevator.direction)
 			    {
 				if(elevator.waitingList[i] > 0 || elevator.destinationList[i] > 0)
 				    {
@@ -274,7 +276,7 @@ public class ElevatorProject
 
 	long  loopTime = 0; // record the time passed during a loop
 	double toSecond = 0; // record the wolhe time passed to know when a second passed.
-	while(window.getKey()!=Defines.QUIT_CHARACTER) 
+	while(window.getKey() != Defines.QUIT_CHARACTER) 
 	    {
 		loopTime =  System.currentTimeMillis(); // Get the start time
 		
@@ -284,8 +286,10 @@ public class ElevatorProject
 			toSecond = 0; // Reinit to 0 the time passed
 		    } 
 
-		Graphics.draw(building,window,toSecond); // But we draw all the time
-		
+
+		Graphics.draw(building, window, toSecond); // But we draw all the time
+		Interface.update(building, window); // And update the controls		
+		window.flush(); // print the drawings 
 
 		toSecond = System.currentTimeMillis() - (double)loopTime + toSecond; // counting the passed time.
 		

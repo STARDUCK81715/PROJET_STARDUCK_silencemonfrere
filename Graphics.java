@@ -1,11 +1,19 @@
 public class Graphics
 {
-    /* ========== VISUAL ================ */
-    // STRUCTURES 
+    /*
+      Nous ne pouvons pas nous permettre de faire passer ces variables en paramètres.
+      Ces variables nécessitent de garder leur valeur indépendemment des tours de boucles.
+      De plus, ils sont supposés être accessibles à tout moment et dépendent de leur précédente valeur.
+      Le passage par référence n'existant pas en Java, la seul solution consisterait à construit un type agrégé afin de stocker ces trois variables. Cette solution a été rejetée car cele necessite un changement de toute l'architecture des fonctions et une structure spécifique à un type de donnée parfaitement caractérisées par le mot "static". 
+      Rappelons que nous restons éloignés de la POO et que l'ensemble de notre programme justifie notre savoir de passer des arguments aux fonctions. 
+
+      Merci.
+     */ 
     static double yOffset = 0;
     static boolean focusOnElevator = true;
     static short viewDirection = 0; // comme elevator.direction : -1 vers le bas, 0 no move, 1 vers le haut
 
+    // ======= STRUCTURE ======== 
     static class Rectangle
     {
 	double width = Defines.FLOOR_WIDTH ; // Usual floor size
@@ -20,6 +28,7 @@ public class Graphics
 	int g = 0;
 	int b = 0;
     }
+    //
 
     static Color createNewColor(double r, double g, double b)
     {
@@ -75,7 +84,7 @@ static void drawPanel(double x, double y , String writting, EcranGraphique windo
     window.drawRect((int)(x-5),(int)(y-Defines.CHAR_HEIGHT),(int)(size*Defines.CHAR_WIDTH+5),Defines.CHAR_HEIGHT+2);
 }
     
-static void drawElevator(ElevatorProject.Elevator elevator, EcranGraphique window, double dt)
+    static void drawElevator(ElevatorProject.Elevator elevator, EcranGraphique window, double dt)
 {
     Rectangle rectangle = new Rectangle();
     int lastLevel = elevator.waitingList.length;
@@ -133,7 +142,7 @@ static void drawElevator(ElevatorProject.Elevator elevator, EcranGraphique windo
 	
 }
 
-static void drawBuilding(ElevatorProject.Building building, EcranGraphique window)
+    static void drawBuilding(ElevatorProject.Building building, EcranGraphique window)
 {
     Rectangle rectangle = new Rectangle();
     int nFloors = building.floors.length;
@@ -145,7 +154,7 @@ static void drawBuilding(ElevatorProject.Building building, EcranGraphique windo
     drawRectangle(rectangle, window, createNewColor(255,255,255)); // Here is the building color 
 }
 
-static void drawPassengersInFloor(Rectangle left, Rectangle right, int passengers, EcranGraphique window)
+    static void drawPassengersInFloor(Rectangle left, Rectangle right, int passengers, EcranGraphique window)
 {
     for(short i=0;i<passengers;i++)
 	{
@@ -178,8 +187,9 @@ static void drawPassengersInFloor(Rectangle left, Rectangle right, int passenger
 
 static void drawPassenger(double x, double y, EcranGraphique window, Color color)
 {
-    window.setColor(color.r,color.g,color.b);
-    window.drawLine((int)x,(int)y,(int)x,(int)(y+Defines.PASSENGER_HEIGHT));
+    window.setColor((int)(color.r), (int)(color.g), (int)(color.b));
+    window.drawLine((int)x, (int)y, (int)x, (int)(y + Defines.PASSENGER_HEIGHT));
+    window.fillCircle((int)x, (int)y, (int)(0.03 * Defines.FLOOR_HEIGHT)); 
 }
 
 static void drawRectangle(Rectangle rectangle, EcranGraphique window , Color color)
@@ -194,12 +204,28 @@ static EcranGraphique createNewEcranGraphique()
 // Return a new EcranGraphic already initialized (with constants before).
 {
     EcranGraphique window = new EcranGraphique();
-    window.init(Defines.WINDOW_X, Defines.WINDOW_Y,Defines.WINDOW_SIZE,Defines.WINDOW_SIZE,Defines.RESOLUTION,Defines.RESOLUTION,Defines.WINDOW_TITLE);
+    
+    window.init(Defines.WINDOW_X,
+		Defines.WINDOW_Y,
+		Defines.WINDOW_SIZE,
+		Defines.WINDOW_SIZE,
+		Defines.RESOLUTION,
+		Defines.RESOLUTION,
+		Defines.WINDOW_TITLE);
+    
+    // window.init(Defines.WINDOW_X,
+    // 		Defines.WINDOW_Y,
+    // 	        Defines.WINDOW_SIZE,
+    // 	        Defines.WINDOW_SIZE,
+    // 	        Defines.RESOLUTION,
+    // 	        Defines.RESOLUTION,
+    // 		Defines.WINDOW_TITLE);
+
     window.clear();
     return window;
 }
 
-static void draw(ElevatorProject.Building building, EcranGraphique window, double dt)
+    static void draw(ElevatorProject.Building building, EcranGraphique window, double dt)
 {
     window.clear();
 
@@ -232,8 +258,6 @@ static void draw(ElevatorProject.Building building, EcranGraphique window, doubl
     drawFloors(building, window); // draw all the floors (TO DO : adapter la position des floors après 10)
     drawElevator(building.elevator, window, dt); // draw the elevator regarding the current time
     //
-
-    window.flush(); // print the drawings 
 }
 
 }

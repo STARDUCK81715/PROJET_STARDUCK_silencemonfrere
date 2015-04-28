@@ -52,7 +52,7 @@ public class ElevatorProject
 	elevator.waitingList=new short[nFloor];
 	elevator.destinationList=new short[nFloor];
 		
-	for(short i=0;i<nFloor;i++)//function ?
+	for(short i=0;i<nFloor;i++)
 	    {
 		elevator.waitingList[i]=0;
 		elevator.destinationList[i]=0;
@@ -276,19 +276,25 @@ public class ElevatorProject
 
 	long  loopTime = 0; // record the time passed during a loop
 	double toSecond = 0; // record the wolhe time passed to know when a second passed.
+
+	
+	Graphics.Point stars[] = new Graphics.Point[Defines.N_STARS];
+	Graphics.initStars(stars);
+
 	while(window.getKey() != Defines.QUIT_CHARACTER) 
-	    {
-		loopTime =  System.currentTimeMillis(); // Get the start time
+	    {  
+		 // Get the start time
+		loopTime =  System.currentTimeMillis();
 		
-		if(toSecond >= 1000) // We update the data (and the appearing ratio) every second
+		// We update the data (and the appearing ratio) every second
+		if(toSecond >= Defines.LAG_TIME) 
 		    {
 			update(building); 
 			toSecond = 0; // Reinit to 0 the time passed
 		    } 
 
-
-		Graphics.draw(building, window, toSecond); // But we draw all the time
-		Interface.update(building, window); // And update the controls		
+		Graphics.draw(building, window, toSecond, stars); // But we draw all the time
+		Interface.update(building, window); // update the textuals drawings
 		window.flush(); // print the drawings 
 
 		toSecond = System.currentTimeMillis() - (double)loopTime + toSecond; // counting the passed time.

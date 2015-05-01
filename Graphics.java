@@ -90,8 +90,28 @@ public class Graphics
 		if(left.y >= -Defines.FLOOR_HEIGHT && left.y <=  Defines.WINDOW_SIZE ) 
 		    {
 			// FLOOR COLOR HERE 
-			drawRectangle(left, window,createNewColor(4, 139, 154)); 
-			drawRectangle(right, window,createNewColor(4, 139, 154));
+			drawRectangle(left, window,createNewColor(216,156,96)); 
+			drawRectangle(right, window,createNewColor(216,156,96));
+			
+			    //balcon
+			window.setColor(216,156,96);
+			
+			if(i >0)
+			{
+				//left side
+			window.drawLine((int)left.x,(int)left.y,(int)left.x-50,(int)left.y);
+			window.drawLine((int)left.x,(int)(left.y-0.5*Defines.FLOOR_HEIGHT),(int)left.x-50,(int)(left.y-0.5*Defines.FLOOR_HEIGHT));
+				
+				//right side 
+			window.drawLine((int)(right.x+Defines.FLOOR_WIDTH),(int)right.y,(int)(right.x+Defines.FLOOR_WIDTH+50),(int)right.y);
+			window.drawLine((int)(right.x+Defines.FLOOR_WIDTH),(int)(right.y-0.5*Defines.FLOOR_HEIGHT),(int)(right.x+Defines.FLOOR_WIDTH+50),(int)(right.y-0.5*Defines.FLOOR_HEIGHT));
+				
+			    for(int j=0;j<=50;j+=10)
+			    {
+				window.drawLine((int)left.x-j,(int)left.y,(int)left.x-j,(int)left.y+(int)(-0.5*Defines.FLOOR_HEIGHT)); //drawing left pillars
+				window.drawLine((int)(right.x+Defines.FLOOR_WIDTH+j),(int)right.y,(int)(right.x+Defines.FLOOR_WIDTH+j),(int)right.y+(int)(-0.5*Defines.FLOOR_HEIGHT));//drawing right pillars
+			    }
+			}
 			drawPassengersInFloor(left, right,currentFloor.passengers, window);
 		
 			// Drawing the number of passengers (textual)
@@ -210,11 +230,11 @@ public class Graphics
 	Rectangle rectangle = new Rectangle();
 	int nFloors = building.floors.length;
 
-	rectangle.x = Defines.BORDER_GAP - Defines.MARGIN ; // MARGIN to do not draw twice on the same pixel
-	rectangle.y = yOffset + Defines.FLOOR_HEIGHT - Defines.MARGIN  ; // same
-	rectangle.width = Defines.WINDOW_SIZE - 2 * Defines.BORDER_GAP + 2 * Defines.MARGIN; // + 2 same
+	rectangle.x = Defines.BORDER_GAP - Defines.MARGIN+2; // MARGIN to do not draw twice on the same pixel
+	rectangle.y = yOffset + Defines.FLOOR_HEIGHT - Defines.MARGIN +2 ; // same
+	rectangle.width = Defines.WINDOW_SIZE - 2 * Defines.BORDER_GAP + 2 * Defines.MARGIN-4; // + 2 same
 	rectangle.height = Defines.FLOOR_HEIGHT * nFloors;
-	fillRectangle(rectangle, window, createNewColor(205, 206, 254)); // Here is the building color
+	fillRectangle(rectangle, window, createNewColor(232, 214, 163)); // Here is the building color
     }
 
     static void drawPassengersInFloor(Rectangle left, Rectangle right, int passengers, EcranGraphique window)
@@ -226,7 +246,7 @@ public class Graphics
 		// We draw the passenger once on each side of the elevator.
 		if(i % 2 == 0) 
 		    {
-			double passengerX = left.x + left.width - i * Defines.PASSENGER_WIDTH;
+			double passengerX = left.x + left.width - i * Defines.PASSENGER_WIDTH-10;
 			while(passengerX <= left.x ) 
 			    {
 				// Here we draw the potential passagers out of the building between the others shifting them one by one.
@@ -239,7 +259,7 @@ public class Graphics
 		// We draw the passenger once on each side of the elevator.
 		else 
 		    {
-			double passengerX = right.x + i * Defines.PASSENGER_WIDTH;
+			double passengerX = right.x + i * Defines.PASSENGER_WIDTH+10;
 			while(passengerX >= right.x + right.width )
 			    {
 				// The same
@@ -274,6 +294,7 @@ public class Graphics
 	window.setColor(color.r, color.g, color.b);
 	window.fillRect( (int)rectangle.x, (int)rectangle.y, (int)rectangle.width, (int)rectangle.height);
     }
+    
 
     static EcranGraphique createNewEcranGraphique()
     // Return a new EcranGraphic already initialized (with constants before).
@@ -334,10 +355,25 @@ public class Graphics
 	x  = x % Defines.RESOLUTION;
 
 	// Draws
-	int starRadius = 2;
+	int starRadius = 1;
 	window.fillCircle(x, (int)star.y + (int)star.offset, starRadius);	
     }
 
+    static void drawGround(EcranGraphique window, ElevatorProject.Building building, double yOffset)
+    {
+	    //Draws the grass on the floor
+	    window.setColor(0,107,33);
+	    window.fillRect(0, (int)(((building.floors.length*Defines.FLOOR_HEIGHT+Defines.BORDER_GAP)-2*Defines.FLOOR_HEIGHT)+yOffset),Defines.WINDOW_SIZE, (int)(5*Defines.FLOOR_HEIGHT));
+	    
+	    //draws the lamp
+	    /*
+	    Color colorLamp= new Color;
+	    colorLamp.r=0;
+	    colorLamp.g=0;
+	    colorLamp.b=0;
+	    */
+	    
+    }
 
 
     /* ==================================================================================================== */ 
@@ -379,6 +415,7 @@ public class Graphics
 	  so the natural super-position about drawing method feign the z-index
 	*/
 	drawSky(window, stars, yOffset);
+	drawGround(window,building, yOffset);
 	drawBuilding(building, window); // draw the main square (white)
 	drawFloors(building, window); // draw all the floors (TO DO : adapter la position des floors après 10)
 	drawElevator(building.elevator, window, dt); // draw the elevator regarding the current time

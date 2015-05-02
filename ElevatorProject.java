@@ -2,7 +2,7 @@
 
 public class ElevatorProject
 {
-     static int timePassed=0; //counting time according to the subject (5 seconds to up 1 floor if nobody enters or exits the elevator for exemple)
+     static int timePassed=0; //counting time according to the subject
 	
     /* ========= CLASS DECLARATION ============== */ 
     static class Building

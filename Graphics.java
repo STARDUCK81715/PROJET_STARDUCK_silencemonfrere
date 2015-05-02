@@ -354,7 +354,7 @@ public class Graphics
 	// Moving on X
 	final int DIVISOR = 1000; // IMPLIES THE SPEED OF STARS
 
-	int x = (int)star.x + (int)System.currentTimeMillis() / DIVISOR ;
+	int x = ((int)star.x + (int)System.currentTimeMillis() / DIVISOR);
 	x  = x % Defines.RESOLUTION;
 
 	// Draws
@@ -419,7 +419,6 @@ public class Graphics
 	drawBuilding(building, window); // draw the main square (white)
 	drawFloors(building, window); // draw all the floors (TO DO : adapter la position des floors après 10)
 	drawElevator(building.elevator, window, dt); // draw the elevator regarding the current time
-	//Graphics.drawPanel(0.0,yOffset,Integer.toString(ElevatorProject.time.timePassed),window,colorTime);
 	//
     }
 

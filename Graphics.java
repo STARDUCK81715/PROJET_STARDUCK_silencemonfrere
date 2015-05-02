@@ -94,25 +94,26 @@ public class Graphics
 			drawRectangle(left, window,createNewColor(216,156,96)); 
 			drawRectangle(right, window,createNewColor(216,156,96));
 			
-			    //balcon
-			//window.setColor(216,156,96);
-			
-			if(i >0)
-			{
-				//left side
-			window.drawLine((int)left.x,(int)left.y,(int)left.x-50,(int)left.y);
-			window.drawLine((int)left.x,(int)(left.y-0.5*Defines.FLOOR_HEIGHT),(int)left.x-50,(int)(left.y-0.5*Defines.FLOOR_HEIGHT));
-				
-				//right side 
-			window.drawLine((int)(right.x+Defines.FLOOR_WIDTH),(int)right.y,(int)(right.x+Defines.FLOOR_WIDTH+50),(int)right.y);
-			window.drawLine((int)(right.x+Defines.FLOOR_WIDTH),(int)(right.y-0.5*Defines.FLOOR_HEIGHT),(int)(right.x+Defines.FLOOR_WIDTH+50),(int)(right.y-0.5*Defines.FLOOR_HEIGHT));
-				
-			    for(int j=0;j<=50;j+=10)
+			// ========= LET'S DRAW THE DETAILS =======
+			// BALCONY
+			for(int j = 0; j < 5 ; j++)
 			    {
-				window.drawLine((int)left.x-j,(int)left.y,(int)left.x-j,(int)left.y+(int)(-0.5*Defines.FLOOR_HEIGHT)); //drawing left pillars
-				window.drawLine((int)(right.x+Defines.FLOOR_WIDTH+j),(int)right.y,(int)(right.x+Defines.FLOOR_WIDTH+j),(int)right.y+(int)(-0.5*Defines.FLOOR_HEIGHT));//drawing right pillars
+				// left balcony
+				window.drawRect((int) ( left.x - 10 * j),
+						(int) ( left.y + 0.5 * left.height),
+						(int) -10,
+						(int) ( left.height / 2)
+						);
+
+				// right balcony
+				window.drawRect((int) ( right.x + right.width + 10 * j),
+						(int) ( right.y + 0.5 * right.height),
+						(int) 10,
+						(int) ( right.height / 2)
+						);
 			    }
-			}
+
+			// PASSENGERS
 			drawPassengersInFloor(left, right,currentFloor.passengers, window);
 		
 			// Drawing the number of passengers (textual)
@@ -123,14 +124,15 @@ public class Graphics
 				  window, // where
 				  createNewColor(150,150,150) // which color
 				  );
-		
-			//Drawing the time to wait 
-			drawPanel(left.x + left.width - nbPassenger.length() * Defines.CHAR_WIDTH, // x
-				  left.y + 1.0 / 6.0 * left.height, // y
-				  Long.toString(building.elevator.timeToWait), // what
-				  window, // where 
-				  createNewColor(150,150,150) // which color
-				  );
+
+			// not useful anymore right ?
+			// //Drawing the time to wait 
+			// drawPanel(left.x + left.width - nbPassenger.length() * Defines.CHAR_WIDTH, // x
+			// 	  left.y + 1.0 / 3.0 * left.height, // y
+			// 	  Long.toString(building.elevator.timeToWait), // what
+			// 	  window, // where 
+			// 	  createNewColor(150,150,150) // which color
+			// 	  );
 
 			// Drawing the number of the floor
 			String index = "Floor number:" + Integer.toString((int)(lastLevel - i));
@@ -364,16 +366,12 @@ public class Graphics
     {
 	    //Draws the grass on the floor
 	    window.setColor(0,107,33);
-	    window.fillRect(0, (int)(((building.floors.length*Defines.FLOOR_HEIGHT+Defines.BORDER_GAP)-2*Defines.FLOOR_HEIGHT)+yOffset),Defines.WINDOW_SIZE, (int)(5*Defines.FLOOR_HEIGHT));
-	    
-	    //draws the lamp
-	    /*
-	    Color colorLamp= new Color;
-	    colorLamp.r=0;
-	    colorLamp.g=0;
-	    colorLamp.b=0;
-	    */
-	    
+	    int buildingHeight = (int)(building.floors.length * Defines.FLOOR_HEIGHT);
+	    window.fillRect(0,
+			    (int)(buildingHeight + Defines.BORDER_GAP - 2 * Defines.FLOOR_HEIGHT + yOffset), // 2 is number of floor in green
+		Defines.WINDOW_SIZE,
+	(int)(5 * Defines.FLOOR_HEIGHT) // grass on 5 floors
+		);	    
     }
 
 

@@ -68,6 +68,7 @@ public class Graphics
 	return color;
     }
     
+    
     static void drawFloors(ElevatorProject.Building building, EcranGraphique window)
     // This method call all the methods regarding the floors aspect.
     {
@@ -94,7 +95,7 @@ public class Graphics
 			drawRectangle(right, window,createNewColor(216,156,96));
 			
 			    //balcon
-			window.setColor(216,156,96);
+			//window.setColor(216,156,96);
 			
 			if(i >0)
 			{
@@ -383,6 +384,7 @@ public class Graphics
     static void draw(ElevatorProject.Building building, EcranGraphique window, double dt, Point[] stars)
     {
 	window.clear();
+	Color colorTime=createNewColor(253, 63, 146);
 
 	// CONTROL 
 	char letter = window.getKey();
@@ -419,6 +421,7 @@ public class Graphics
 	drawBuilding(building, window); // draw the main square (white)
 	drawFloors(building, window); // draw all the floors (TO DO : adapter la position des floors après 10)
 	drawElevator(building.elevator, window, dt); // draw the elevator regarding the current time
+	//Graphics.drawPanel(0.0,yOffset,Integer.toString(ElevatorProject.time.timePassed),window,colorTime);
 	//
     }
 

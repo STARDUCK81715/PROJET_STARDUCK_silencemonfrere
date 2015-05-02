@@ -2,6 +2,8 @@
 
 public class ElevatorProject
 {
+     static int timePassed=0; //counting time according to the subject (5 seconds to up 1 floor if nobody enters or exits the elevator for exemple)
+	
     /* ========= CLASS DECLARATION ============== */ 
     static class Building
     {
@@ -27,6 +29,7 @@ public class ElevatorProject
 	double probability = Math.random();
         short passengers = 0;
     };
+      
 	
 	
     /* =========== INITIALIZATION FUNCTIONS ============ */	
@@ -172,7 +175,7 @@ public class ElevatorProject
 	   && System.currentTimeMillis() > elevator.timeAtArrive + elevator.timeToWait // nobody is moving
 	   ) 
 	    {
-		Ecran.afficherln("Current time : ",   elevator.timeAtArrive + elevator.timeToWait - System.currentTimeMillis());
+		//Ecran.afficherln("Current time : ",   -(elevator.timeAtArrive + elevator.timeToWait) + System.currentTimeMillis());
 		elevator.positionByHeight+=elevator.direction;
 	    }
 	
@@ -276,8 +279,9 @@ public class ElevatorProject
 
 	long  loopTime = 0; // record the time passed during a loop
 	double toSecond = 0; // record the wolhe time passed to know when a second passed.
-
+	 
 	
+	    
 	Graphics.Point stars[] = new Graphics.Point[Defines.N_STARS];
 	Graphics.initStars(stars);
 
@@ -286,11 +290,14 @@ public class ElevatorProject
 		 // Get the start time
 		loopTime =  System.currentTimeMillis();
 		
+		
 		// We update the data (and the appearing ratio) every second
 		if(toSecond >= Defines.LAG_TIME) 
 		    {
 			update(building); 
 			toSecond = 0; // Reinit to 0 the time passed
+			timePassed+=1;
+			
 		    } 
 
 		Graphics.draw(building, window, toSecond, stars); // But we draw all the time

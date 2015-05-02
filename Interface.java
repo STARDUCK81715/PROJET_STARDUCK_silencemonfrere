@@ -54,10 +54,11 @@ public class Interface
 	int seconds =  (int)(System.currentTimeMillis() - elevator.timeAtArrive) / 1000 ;
 	int secondsToWait = (int)(elevator.timeToWait / 1000);
 	
+	
 	seconds = (elevator.direction == 0) ? seconds : 0;
 
 	window.drawText((int)(0.1 * menuWidth), (int)(menuY + menuHeight * 0.3), window.COLABA8x13, "Secondes attendues : " + Integer.toString(seconds) + " / " + Integer.toString(secondsToWait) );
-	
+	window.drawText((int)(0.6 * menuWidth), (int)(menuY + menuHeight * 0.1), window.COLABA8x13, "Time : " + Integer.toString(ElevatorProject.timePassed));
 
     }
 

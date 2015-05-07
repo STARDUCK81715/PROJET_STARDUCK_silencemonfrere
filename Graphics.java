@@ -177,15 +177,15 @@ public class Graphics
 	rectangle.height = Defines.ELEVATOR_HEIGHT;
 	rectangle.x = Defines.BORDER_GAP + Defines.FLOOR_WIDTH + 1; // GAP + FLOOR + 1 
 
-	double position = lastLevel - (float)(elevator.positionByHeight) / (float)(Defines.FLOOR_HEIGHT_METERS) ; // FLOOR NUMBER
+	double position = (double)lastLevel - (float)(elevator.positionByHeight) / (float)(Defines.FLOOR_HEIGHT_METERS) ; // FLOOR NUMBER
 	rectangle.y = yOffset + Defines.FLOOR_HEIGHT * (position); // POSITION * FLOORS_HEIGH
 
 	// INTERPOLATING
 	double x = dt / 1000.0; // x as f(x) = interpolate(x)
 	double interpolation = 1 * x;
 
-	// if the elevator is moving // TODO add a bool in elevator
-	if(System.currentTimeMillis() > elevator.timeAtArrive + elevator.timeToWait)
+	// if the elevator is moving 
+	if( elevator.timeAtGo  < System.currentTimeMillis()  ) // TODO : Jouer sur les arrondis pour que le graphismes ne parte pas trop tot
 	    {
 		rectangle.y -= (float)(elevator.direction) * interpolation / (float)Defines.FLOOR_HEIGHT_METERS * Defines.FLOOR_HEIGHT;		
 	    }
@@ -209,11 +209,15 @@ public class Graphics
 	// Drawing number of passenger (its colors tends to the red with the number of passengers)
 	String nbPass = Integer.toString((int)(elevator.passengers));
 	double ratio = (double)(elevator.passengers) / (double)(elevator.CAPACITY); // here is the tend-tion
-	drawPanel(rectangle.x + 1/3.0 * rectangle.width, rectangle.y + 2, nbPass,window, createNewColor(255 ,255.0 * (1.0 - ratio), 255.0 * (1.0 - ratio)));
+	drawPanel(rectangle.x + 1/3.0 * rectangle.width, // x
+		  rectangle.y + 2, // y
+		  nbPass, // what
+		  window, // where 
+		  createNewColor( 255 ,255.0 * (1.0 - ratio), 255.0 * (1.0 - ratio) ) // how
+		  );
 
 
-	// updating focusing elevator
-	// TO DO : sortir ca de la, aucun rapport quoi :p 
+	// updating focusing elevator (here beacause of easier access to data instead of recalculating it somewhere else) 
 	if(focusOnElevator)
 	    {
 		yOffset = (yOffset > -rectangle.y) 
@@ -227,13 +231,16 @@ public class Graphics
 	
     }
 
+
+    /// HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+
     static void drawBuilding(ElevatorProject.Building building, EcranGraphique window)
     // Calls all the methods to draw a building and draw its skull.
     {
 	Rectangle rectangle = new Rectangle();
 	int nFloors = building.floors.length;
 
-	rectangle.x = Defines.BORDER_GAP - Defines.MARGIN+2; // MARGIN to do not draw twice on the same pixel
+	rectangle.x = Defines.BORDER_GAP - Defines.MARGIN + 2; // MARGIN to do not draw twice on the same pixel
 	rectangle.y = yOffset + Defines.FLOOR_HEIGHT - Defines.MARGIN +2 ; // same
 	rectangle.width = Defines.WINDOW_SIZE - 2 * Defines.BORDER_GAP + 2 * Defines.MARGIN-4; // + 2 same
 	rectangle.height = Defines.FLOOR_HEIGHT * nFloors;

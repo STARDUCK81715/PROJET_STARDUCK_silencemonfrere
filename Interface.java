@@ -33,14 +33,10 @@ public class Interface
 	/// TEXT
 	// quick access
         ElevatorProject.Elevator elevator = building.elevator;
-	int position =(int)( (float)elevator.positionByHeight / (float)(Defines.FLOOR_HEIGHT_METERS));
-	int nextPosition = (
-			    elevator.direction < 0 && elevator.direction + position >= 0
-			    || elevator.direction > 0 && elevator.direction + position <= building.floors.length -1
-			    ) 
-	    ? position + elevator.direction 
-	    : position;
-	
+	int position =(int)( (float)elevator.positionByHeight / (float)(Defines.FLOOR_HEIGHT_METERS)  ); 
+	int nextPosition = ( elevator.direction > 0 && elevator.direction + position >= 0 ) 	    ? position + elevator.direction : position;
+			    
+	nextPosition = (elevator.direction == 0) ? 0 : nextPosition; 	
 	
 	// LEAVERS
 	int nQuit = elevator.destinationList[nextPosition];	
@@ -51,17 +47,11 @@ public class Interface
 	window.drawText((int)(0.1 * menuWidth), (int)(menuY + menuHeight * 0.2), window.COLABA8x13, "Veulent monter au prochain etage : " + Integer.toString(nEnter) );
 
 	// TIME TO WAIT
-	window.setColor(64,64,0);
-	int seconds =  (int)(System.currentTimeMillis() - elevator.timeAtArrive) / 1000 ;
-	int secondsToWait = (int)(elevator.timeToWait / 1000);
+	window.setColor(64, 64, 0);
 	
-	seconds = (elevator.direction == 0) ? seconds : 0;
-	window.drawText(
-			(int)(0.1 * menuWidth), // x
-			(int)(menuY + menuHeight * 0.3), //y
-			window.COLABA8x13, // format
-			"Secondes attendues : " + Integer.toString(seconds) + " / " + Integer.toString(secondsToWait)  // text
-			);
+	// TO DO 
+
+	// ELAPSED TIME 
 	window.drawText(
 			(int)(0.6 * menuWidth), //x
 			(int)(menuY + menuHeight * 0.1), //y

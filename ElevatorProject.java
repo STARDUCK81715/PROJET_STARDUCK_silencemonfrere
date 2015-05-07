@@ -8,26 +8,26 @@ public class ElevatorProject
     static class Building
     {
 	Elevator elevator;
-	Floor[] floors;
+	Floor[] floors; // the whole floors
     };
 	
     static class Elevator
     {
 	short CAPACITY = -1; // Can't be constant due to hand initialization 
-	short direction = 0; //-1,0,1 /!\ 
+	short direction = 0; // is -1 when going top, 1 going bot and 0 not moving
         short positionByHeight = 0;
 	short passengers = 0;
-	short[] waitingList;
-	short[] destinationList;
+	short[] waitingList; // The list of the floor with the number of passengers waiting
+	short[] destinationList; // The list of the floor with the number of passengers inside the elevator who will quit
 
-	long timeAtArrive = 0;
-	long timeToWait = 0;
+	long timeAtGo = 0; // once the current time join this one the elevator can move
+
     };
 
     static class Floor
     {
-	double probability = Math.random();
-        short passengers = 0;
+	double probability = Math.random() / 10.0; // Probability that someone appears
+        short passengers = 0; // Number of passenger waiting
     };
       
 	
@@ -37,12 +37,12 @@ public class ElevatorProject
     // Return a new building with all members initialized.
     {
 	Building building = new Building();
-	building.floors=new Floor[nFloor];
-	building.elevator=createNewElevator(nFloor);	
+	building.floors = new Floor[nFloor];
+	building.elevator = createNewElevator(nFloor);	
 		
-	for(short i=0;i<nFloor;i++) // function ?
+	for(short i = 0; i < nFloor; i++) // function ?
 	    {
-		building.floors[i]=new Floor();
+		building.floors[i] = new Floor();
 			
 	    }
 	return building;
@@ -52,13 +52,13 @@ public class ElevatorProject
     // Return a new elevator with all members initialized.
     {
 	Elevator elevator = new Elevator();
-	elevator.waitingList=new short[nFloor];
-	elevator.destinationList=new short[nFloor];
+	elevator.waitingList = new short[nFloor];
+	elevator.destinationList = new short[nFloor];
 		
-	for(short i=0;i<nFloor;i++)
+	for(short i = 0; i < nFloor; i++)
 	    {
-		elevator.waitingList[i]=0;
-		elevator.destinationList[i]=0;
+		elevator.waitingList[i] = 0;
+		elevator.destinationList[i] = 0;
 	    }
 
 	Ecran.afficherln("Veuillez saisir la capacite max de l'ascenceur.");
@@ -70,11 +70,10 @@ public class ElevatorProject
     static short askForNumberFloors()
     // Return a valid number of floors from the user.
     {
-	Ecran.afficherln("Veuillez saisir le nombre d'etages que votre building doit posseder. (entre 0 et ",Defines.MAX_LIMIT_FLOORS, " ).");
-	short nFloors=Clavier.saisirShort();
-	verifyInBetween(nFloors,0,Defines.MAX_LIMIT_FLOORS);
+	Ecran.afficherln("Veuillez saisir le nombre d'etages que votre building doit posseder. (entre 0 et ", Defines.MAX_LIMIT_FLOORS, " ).");
+	short nFloors = Clavier.saisirShort();
+	verifyInBetween(nFloors, 0, Defines.MAX_LIMIT_FLOORS);
 	return nFloors;
-
     }
 
     static void verifyInBetween(double number, int min, int max)
@@ -83,145 +82,159 @@ public class ElevatorProject
 	while(number < min || number > max)
 	    {
 		Ecran.afficherln("Saisie incorrecte. Veuillez reiterer un nombre entre " , min , " et ", max);
-		number=Clavier.saisirDouble();
+		number = Clavier.saisirDouble();
 	    }
     }
 
     static void update(Building building)
     {
-	/*
-	  Ajoute les nouvelles personnes à chaque etages
-	  Gestion des appels (building dit a elevator qui attend et ou)
-	  Elevator bouge
-	  Elevator et se charge/decharge
-	*/
-        manageApparition(building);
-	manageCalls(building);
+        manageApparition(building); // Toss a coin to know if someone appears for each floor
 	updateElevator(building) ; // Va appeler move et decharge
     }
 
     static void manageApparition(Building building)
     {
-	for(short i=0; i < building.floors.length; i++)
+	// for each floor
+	for(short i = 0; i < building.floors.length; i++)
 	    {
 		Floor currentFloor = building.floors[i];
+
+		// if we have a good drop
 		if(tossProbility(currentFloor.probability) == true)
 		    {
+			// we had a passenger
 			currentFloor.passengers += 1;
 			
-			// Our model has problem if someone appears during his waiting; so we directly add the delay if it happens and if it isn't full.
+			// and update the elevator timetowait if here
 			if(
 			   building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS == i 
 			   &&  building.elevator.passengers < building.elevator.CAPACITY)
 			    {
-				building.elevator.timeToWait += Defines.WAITING_TIME_PER_PASSENGER;
+				building.elevator.timeAtGo += Defines.WAITING_TIME_PER_PASSENGER;
 			    }
 		    }
 	    }
     }
 
     static boolean tossProbility(double probability)
+    // toss a coin 
     {
-	return Math.random()<=probability;
+	return Math.random() <= probability;
     }
 
     static void manageCalls(Building building)
+    // each update floor the elevator's waiting list
     {
-	for(short i=0;i<building.floors.length;i++)
+	for(short i = 0; i < building.floors.length; i++)
 	    {
 		Floor currentFloor = building.floors[i];
-		building.elevator.waitingList[i]=currentFloor.passengers;
+		building.elevator.waitingList[i] = currentFloor.passengers;
 	    }
     }
 
     static void updateElevator(Building building) 
-    // Move & unstack
+    // Move & unstack passengers
     {
-	moveElevator(building.elevator); 
-	if(building.elevator.positionByHeight%Defines.FLOOR_HEIGHT_METERS == 0)
+	manageCalls(building); // update the waiting list
+
+	if( building.elevator.timeAtGo / 1000 < System.currentTimeMillis() / 1000 ) 	
+	    {moveElevator(building.elevator);} // move the elevator
+
+	if(building.elevator.positionByHeight % Defines.FLOOR_HEIGHT_METERS == 0)
+	    // Nous sommes à un étage
 	    {
-		// Nous sommes à un étage
-		updateElevatorTiming(building);
-		
-		unstackElevator(building.elevator);
-		stackInElevator(building);
-		updateDirection(building.elevator);
+	        updateElevatorTiming(building); // time at arrive
+		if( !unstackElevator(building.elevator) ) stackInElevator(building); // let passengers moving
+		updateDirection(building.elevator); // update the direction
 	    }     
     }
 
     static void updateElevatorTiming(Building building)
     {
-	if(System.currentTimeMillis() > building.elevator.timeAtArrive + building.elevator.timeToWait)
+    	// if we just arrive at the floor
+	if(building.elevator.timeAtGo / 1000 < System.currentTimeMillis() / 1000 )
 	    {
-		// Actualiza the last step
-		building.elevator.timeAtArrive = System.currentTimeMillis();
-	
-		// Update the time to wait
-		int nQuit = building.elevator.destinationList[building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS];
-		int nPossible  = building.elevator.CAPACITY - building.elevator.passengers ;
-		int nEnter = Math.min(nPossible,building.floors[building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS].passengers);
-		building.elevator.timeToWait = Defines.WAITING_TIME_PER_PASSENGER * (nQuit + nEnter);
+	        building.elevator.timeAtGo = System.currentTimeMillis() / 1000 * 1000  ; // rounded to the second
+		short position = (short) (building.elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS) ;
+		short nEnter = (short) Math.min(building.elevator.CAPACITY - building.elevator.passengers, building.floors[position].passengers );
+		short nQuit = building.elevator.destinationList[position];
 
-		// Print it regarding people
-		Ecran.afficherln("nquite : ", nQuit , " nEnter : " , nEnter , " Time total : " , building.elevator.timeToWait ) ; // TO DO : afficher à l'écran.
+		// Ajout du temps
+		building.elevator.timeAtGo += Defines.WAITING_TIME_PER_PASSENGER * ( nEnter + nQuit );
 	    }
     }
 
     static void moveElevator(Elevator elevator)
     {
 	if(
-	   (elevator.positionByHeight+elevator.direction)/Defines.FLOOR_HEIGHT_METERS <= elevator.waitingList.length-1  // security
-	   && (elevator.positionByHeight+elevator.direction)/Defines.FLOOR_HEIGHT_METERS >=0 // security
-	   && System.currentTimeMillis() > elevator.timeAtArrive + elevator.timeToWait // nobody is moving
+	   (elevator.positionByHeight+elevator.direction) / Defines.FLOOR_HEIGHT_METERS <= elevator.waitingList.length - 1  // security
+	   && (elevator.positionByHeight + elevator.direction) / Defines.FLOOR_HEIGHT_METERS >= 0 // security // the waiting time passed
 	   ) 
 	    {
-		//Ecran.afficherln("Current time : ",   -(elevator.timeAtArrive + elevator.timeToWait) + System.currentTimeMillis());
-		elevator.positionByHeight+=elevator.direction;
+		elevator.positionByHeight += elevator.direction;
 	    }
 	
     }
-    static void unstackElevator(Elevator elevator)
+    static boolean unstackElevator(Elevator elevator)
+    // Let the passengers going out
     {
-	//	Ecran.afficherln(" Passengers : " , elevator.passengers , ". At floor " , elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS, " how many people down : " , elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS]);
-	short nbQuit=elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS];
-	elevator.passengers-=nbQuit;
-	elevator.destinationList[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS]=0;
+	// Number of passengers that wanted to go out here
+	short nbQuit = elevator.destinationList[ elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS ];
+
+	if(nbQuit > 0)
+	    // If someone want to exit then someone exits... :p
+	    {
+		elevator.passengers -= 1;
+		elevator.destinationList[ elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS ] -= 1;
+		return true;
+	    }
+	return false;
+
     }
 
-    static void stackInElevator(Building building)
+    static boolean stackInElevator(Building building)
+    // Let the passengers going in
     {
 	Elevator elevator = building.elevator;
-	Floor currentFloor = building.floors[elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS];
-
-	while(elevator.passengers<elevator.CAPACITY && currentFloor.passengers>0)
+	Floor currentFloor = building.floors[ elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS ];
+	short nbIn = (short)Math.min( elevator.CAPACITY - elevator.passengers, currentFloor.passengers); // if their is still a litle place
+	
+	if(nbIn > 0)
+	    // If someone want to enter then someone enters... :p
 	    {
-		currentFloor.passengers-=1;
-		elevator.passengers++;
+		elevator.passengers += 1;
+		currentFloor.passengers -= 1;
 		addRandomLocation(elevator);
+		return true;
 	    }
-
+	return false;
     }
 
     static void addRandomLocation(Elevator elevator)
+    // Add randomly a location to the elevator(s destination list
     {
-	short currentPosition = (short)(elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS);
+	short currentPosition = (short)( elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS );
 	short randomLocation = -1;
 	do
+	    // The new destination shouldn't be the same as the actual floor
 	    {
-		randomLocation = (short)(Math.random()*elevator.waitingList.length);
-	    }while(randomLocation==currentPosition);
+		randomLocation = (short)(Math.random() * elevator.waitingList.length);
+		
+	    } while( randomLocation == currentPosition );
+	
 	elevator.destinationList[randomLocation]++;
     }
 
     static void updateDirection(Elevator elevator)
+    // The main algorithm, it decides where the elevator goes
     {
-	short newDirection = 0; // We keep the initial direciton
+	short newDirection = 0 ;
 	short position = (short)(elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS);
 	
 	if(elevator.direction != 0)
-	    {
-		// First we see in the same direction if there is someone calling the elevator
-		for(short i = (short)(position + signOf(elevator.direction)); i < elevator.waitingList.length && i >= 0; i += elevator.direction)
+	    // we were moving, then we look forward if someone is waiting 
+	    { 
+		for(short i = (short)(position + elevator.direction); i < elevator.waitingList.length && i >= 0; i += elevator.direction)
 		    {
 			if(elevator.waitingList[i] > 0 || elevator.destinationList[i] > 0)
 			    {
@@ -230,9 +243,9 @@ public class ElevatorProject
 		    }
 	
 		// Then if necessary we see in the other direction if there is someone calling the elevator
-		if(newDirection == 0)
+		if(newDirection == 0) // (no one is waiting in the past direction)
 		    {
-			for(short i = (short)(position+signOf((short)(-elevator.direction) )); i < elevator.waitingList.length && i >= 0; i -= elevator.direction)
+			for(short i = (short)(position + -elevator.direction ); i < elevator.waitingList.length && i >= 0; i -= elevator.direction)
 			    {
 				if(elevator.waitingList[i] > 0 || elevator.destinationList[i] > 0)
 				    {
@@ -254,13 +267,6 @@ public class ElevatorProject
 			    }
 		    }
 	    }
-
-	// If waiting direction = 0 
-	if(System.currentTimeMillis() < elevator.timeToWait + elevator.timeAtArrive)
-	    {
-		elevator.direction = 0;
-	    }
-
     }
 
     static short signOf(short i)

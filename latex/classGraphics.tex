@@ -1,0 +1,361 @@
+\hypertarget{classGraphics}{\section{Référence de la classe Graphics}
+\label{classGraphics}\index{Graphics@{Graphics}}
+}
+
+
+Moteur graphique pour un meilleur control.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classGraphics_1_1Color}{Color}
+\begin{DoxyCompactList}\small\item\em Structure servant a modeliser une couleur. \end{DoxyCompactList}\item 
+class \hyperlink{classGraphics_1_1Point}{Point}
+\begin{DoxyCompactList}\small\item\em Structure servant a modeliser un point evoluant ou non en fonction de l'offset. \end{DoxyCompactList}\item 
+class \hyperlink{classGraphics_1_1Rectangle}{Rectangle}
+\begin{DoxyCompactList}\small\item\em Structure servant a modeliser un rectangle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Fonctions statiques de paquetage}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classGraphics_1_1Color}{Color} \hyperlink{classGraphics_af1f37200dbaa7377a0fad087b131685c}{create\-New\-Color} (double r, double g, double b)
+\begin{DoxyCompactList}\small\item\em Constructeur de couleur (R,G,B) \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_acb95efd9ee6f8f7455ab34b4e7a5595f}{draw\-Floors} (\hyperlink{classElevatorProject_1_1Building}{Elevator\-Project.\-Building} building, Ecran\-Graphique window)
+\begin{DoxyCompactList}\small\item\em Dessine les etages de l'immeuble. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_ade1622c47ceb6de75f43263877c507be}{draw\-Panel} (double x, double y, String writting, Ecran\-Graphique window, \hyperlink{classGraphics_1_1Color}{Color} color)
+\begin{DoxyCompactList}\small\item\em Fonction de base qui dessine un texte encadre. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_a94fe503a2f1ce58fa72eac1b2a155a61}{draw\-Elevator} (\hyperlink{classElevatorProject_1_1Elevator}{Elevator\-Project.\-Elevator} elevator, Ecran\-Graphique window, double dt)
+\begin{DoxyCompactList}\small\item\em Dessine l'assenceur et ses passagers. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_a1ad76c2c5fada5a5469a0509a5290d9e}{draw\-Building} (\hyperlink{classElevatorProject_1_1Building}{Elevator\-Project.\-Building} building, Ecran\-Graphique window)
+\begin{DoxyCompactList}\small\item\em Dessine le batiment et ses composants. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_acea296716ca092de00953b224cf30513}{draw\-Passengers\-In\-Floor} (\hyperlink{classGraphics_1_1Rectangle}{Rectangle} left, \hyperlink{classGraphics_1_1Rectangle}{Rectangle} right, int passengers, Ecran\-Graphique window)
+\begin{DoxyCompactList}\small\item\em Dessine les passagers a l'interieur de l'etage. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_a610b075169ec0dc4d213ed67938c14b6}{draw\-Passenger} (double x, double y, Ecran\-Graphique window, \hyperlink{classGraphics_1_1Color}{Color} color)
+\begin{DoxyCompactList}\small\item\em Fonction de base pour dessiner un passager. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_aa6c7ba1a513cd083fa8ee623794353ea}{draw\-Rectangle} (\hyperlink{classGraphics_1_1Rectangle}{Rectangle} rectangle, Ecran\-Graphique window, \hyperlink{classGraphics_1_1Color}{Color} color)
+\begin{DoxyCompactList}\small\item\em Fonction de base pour dessiner un rectangle. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_acdb4c64b7fb63fc7296082ce4393a67e}{fill\-Rectangle} (\hyperlink{classGraphics_1_1Rectangle}{Rectangle} rectangle, Ecran\-Graphique window, \hyperlink{classGraphics_1_1Color}{Color} color)
+\begin{DoxyCompactList}\small\item\em Fonction de base pour dessiner un rectangle plein. \end{DoxyCompactList}\item 
+static Ecran\-Graphique \hyperlink{classGraphics_a8248a417559b11754031f0104d1f2e66}{create\-New\-Ecran\-Graphique} ()
+\begin{DoxyCompactList}\small\item\em Constructeur de Ecran\-Graphique. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_ad24b32a0c3afa9eec70ba4480a23a3f7}{init\-Stars} (\hyperlink{classGraphics_1_1Point}{Point} stars\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Prepare les etoiles a etre dessinees. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_a5c2e759c0b8244e4970926ac1b588923}{draw\-Sky} (Ecran\-Graphique window, \hyperlink{classGraphics_1_1Point}{Point}\mbox{[}$\,$\mbox{]} stars, double \hyperlink{classGraphics_a005723dda272a11cb27933d59f4d90af}{y\-Offset})
+\begin{DoxyCompactList}\small\item\em Dessine le ciel et ses composants. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_a5678ce0ca6a9a8fedf3fe15993419280}{draw\-Star} (Ecran\-Graphique window, \hyperlink{classGraphics_1_1Point}{Point} star)
+\begin{DoxyCompactList}\small\item\em Dessine les etoiles. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_a9cc7630d73f9e4710e86e194c2acf75d}{draw\-Ground} (Ecran\-Graphique window, \hyperlink{classElevatorProject_1_1Building}{Elevator\-Project.\-Building} building, double \hyperlink{classGraphics_a005723dda272a11cb27933d59f4d90af}{y\-Offset})
+\begin{DoxyCompactList}\small\item\em Dessine le sol. \end{DoxyCompactList}\item 
+static void \hyperlink{classGraphics_a64678ac1443c02abcb5181c960f53733}{draw} (\hyperlink{classElevatorProject_1_1Building}{Elevator\-Project.\-Building} building, Ecran\-Graphique window, double dt, \hyperlink{classGraphics_1_1Point}{Point}\mbox{[}$\,$\mbox{]} stars)
+\begin{DoxyCompactList}\small\item\em Fonction principale qui dessine un batiment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs statiques de paquetage}
+\begin{DoxyCompactItemize}
+\item 
+static double \hyperlink{classGraphics_a005723dda272a11cb27933d59f4d90af}{y\-Offset} = 0
+\begin{DoxyCompactList}\small\item\em Offset servant au scrolling. \end{DoxyCompactList}\item 
+static boolean \hyperlink{classGraphics_a3622c075b72c6c266ee72ca04988ab3f}{focus\-On\-Elevator} = true
+\begin{DoxyCompactList}\small\item\em Boolean decidant si l'on centre sur l'ascenceur ou non. \end{DoxyCompactList}\item 
+static short \hyperlink{classGraphics_a0ce58ea07f00e09025d11fb9c9085b1b}{view\-Direction} = 0
+\begin{DoxyCompactList}\small\item\em Sert si l'on ne centre pas au scrolling avec 'O' et 'L'. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Moteur graphique pour un meilleur control. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{classGraphics_af1f37200dbaa7377a0fad087b131685c}{\index{Graphics@{Graphics}!create\-New\-Color@{create\-New\-Color}}
+\index{create\-New\-Color@{create\-New\-Color}!Graphics@{Graphics}}
+\subsubsection[{create\-New\-Color}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Color} Graphics.\-create\-New\-Color (
+\begin{DoxyParamCaption}
+\item[{double}]{r, }
+\item[{double}]{g, }
+\item[{double}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_af1f37200dbaa7377a0fad087b131685c}
+
+
+Constructeur de couleur (R,G,B) 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_a8248a417559b11754031f0104d1f2e66}{\index{Graphics@{Graphics}!create\-New\-Ecran\-Graphique@{create\-New\-Ecran\-Graphique}}
+\index{create\-New\-Ecran\-Graphique@{create\-New\-Ecran\-Graphique}!Graphics@{Graphics}}
+\subsubsection[{create\-New\-Ecran\-Graphique}]{\setlength{\rightskip}{0pt plus 5cm}static Ecran\-Graphique Graphics.\-create\-New\-Ecran\-Graphique (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a8248a417559b11754031f0104d1f2e66}
+
+
+Constructeur de Ecran\-Graphique. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_a64678ac1443c02abcb5181c960f53733}{\index{Graphics@{Graphics}!draw@{draw}}
+\index{draw@{draw}!Graphics@{Graphics}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw (
+\begin{DoxyParamCaption}
+\item[{{\bf Elevator\-Project.\-Building}}]{building, }
+\item[{Ecran\-Graphique}]{window, }
+\item[{double}]{dt, }
+\item[{{\bf Point}\mbox{[}$\,$\mbox{]}}]{stars}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a64678ac1443c02abcb5181c960f53733}
+
+
+Fonction principale qui dessine un batiment. 
+
+\begin{DoxyAuthor}{Auteurs}
+Paul-\/\-Armand Michaud 
+
+Ervan Silvert 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_a1ad76c2c5fada5a5469a0509a5290d9e}{\index{Graphics@{Graphics}!draw\-Building@{draw\-Building}}
+\index{draw\-Building@{draw\-Building}!Graphics@{Graphics}}
+\subsubsection[{draw\-Building}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Building (
+\begin{DoxyParamCaption}
+\item[{{\bf Elevator\-Project.\-Building}}]{building, }
+\item[{Ecran\-Graphique}]{window}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a1ad76c2c5fada5a5469a0509a5290d9e}
+
+
+Dessine le batiment et ses composants. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_a94fe503a2f1ce58fa72eac1b2a155a61}{\index{Graphics@{Graphics}!draw\-Elevator@{draw\-Elevator}}
+\index{draw\-Elevator@{draw\-Elevator}!Graphics@{Graphics}}
+\subsubsection[{draw\-Elevator}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Elevator (
+\begin{DoxyParamCaption}
+\item[{{\bf Elevator\-Project.\-Elevator}}]{elevator, }
+\item[{Ecran\-Graphique}]{window, }
+\item[{double}]{dt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a94fe503a2f1ce58fa72eac1b2a155a61}
+
+
+Dessine l'assenceur et ses passagers. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_acb95efd9ee6f8f7455ab34b4e7a5595f}{\index{Graphics@{Graphics}!draw\-Floors@{draw\-Floors}}
+\index{draw\-Floors@{draw\-Floors}!Graphics@{Graphics}}
+\subsubsection[{draw\-Floors}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Floors (
+\begin{DoxyParamCaption}
+\item[{{\bf Elevator\-Project.\-Building}}]{building, }
+\item[{Ecran\-Graphique}]{window}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_acb95efd9ee6f8f7455ab34b4e7a5595f}
+
+
+Dessine les etages de l'immeuble. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_a9cc7630d73f9e4710e86e194c2acf75d}{\index{Graphics@{Graphics}!draw\-Ground@{draw\-Ground}}
+\index{draw\-Ground@{draw\-Ground}!Graphics@{Graphics}}
+\subsubsection[{draw\-Ground}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Ground (
+\begin{DoxyParamCaption}
+\item[{Ecran\-Graphique}]{window, }
+\item[{{\bf Elevator\-Project.\-Building}}]{building, }
+\item[{double}]{y\-Offset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a9cc7630d73f9e4710e86e194c2acf75d}
+
+
+Dessine le sol. 
+
+\begin{DoxyAuthor}{Auteurs}
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_ade1622c47ceb6de75f43263877c507be}{\index{Graphics@{Graphics}!draw\-Panel@{draw\-Panel}}
+\index{draw\-Panel@{draw\-Panel}!Graphics@{Graphics}}
+\subsubsection[{draw\-Panel}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Panel (
+\begin{DoxyParamCaption}
+\item[{double}]{x, }
+\item[{double}]{y, }
+\item[{String}]{writting, }
+\item[{Ecran\-Graphique}]{window, }
+\item[{{\bf Color}}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_ade1622c47ceb6de75f43263877c507be}
+
+
+Fonction de base qui dessine un texte encadre. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_a610b075169ec0dc4d213ed67938c14b6}{\index{Graphics@{Graphics}!draw\-Passenger@{draw\-Passenger}}
+\index{draw\-Passenger@{draw\-Passenger}!Graphics@{Graphics}}
+\subsubsection[{draw\-Passenger}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Passenger (
+\begin{DoxyParamCaption}
+\item[{double}]{x, }
+\item[{double}]{y, }
+\item[{Ecran\-Graphique}]{window, }
+\item[{{\bf Color}}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a610b075169ec0dc4d213ed67938c14b6}
+
+
+Fonction de base pour dessiner un passager. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_acea296716ca092de00953b224cf30513}{\index{Graphics@{Graphics}!draw\-Passengers\-In\-Floor@{draw\-Passengers\-In\-Floor}}
+\index{draw\-Passengers\-In\-Floor@{draw\-Passengers\-In\-Floor}!Graphics@{Graphics}}
+\subsubsection[{draw\-Passengers\-In\-Floor}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Passengers\-In\-Floor (
+\begin{DoxyParamCaption}
+\item[{{\bf Rectangle}}]{left, }
+\item[{{\bf Rectangle}}]{right, }
+\item[{int}]{passengers, }
+\item[{Ecran\-Graphique}]{window}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_acea296716ca092de00953b224cf30513}
+
+
+Dessine les passagers a l'interieur de l'etage. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_aa6c7ba1a513cd083fa8ee623794353ea}{\index{Graphics@{Graphics}!draw\-Rectangle@{draw\-Rectangle}}
+\index{draw\-Rectangle@{draw\-Rectangle}!Graphics@{Graphics}}
+\subsubsection[{draw\-Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Rectangle (
+\begin{DoxyParamCaption}
+\item[{{\bf Rectangle}}]{rectangle, }
+\item[{Ecran\-Graphique}]{window, }
+\item[{{\bf Color}}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_aa6c7ba1a513cd083fa8ee623794353ea}
+
+
+Fonction de base pour dessiner un rectangle. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_a5c2e759c0b8244e4970926ac1b588923}{\index{Graphics@{Graphics}!draw\-Sky@{draw\-Sky}}
+\index{draw\-Sky@{draw\-Sky}!Graphics@{Graphics}}
+\subsubsection[{draw\-Sky}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Sky (
+\begin{DoxyParamCaption}
+\item[{Ecran\-Graphique}]{window, }
+\item[{{\bf Point}\mbox{[}$\,$\mbox{]}}]{stars, }
+\item[{double}]{y\-Offset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a5c2e759c0b8244e4970926ac1b588923}
+
+
+Dessine le ciel et ses composants. 
+
+\begin{DoxyAuthor}{Auteurs}
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_a5678ce0ca6a9a8fedf3fe15993419280}{\index{Graphics@{Graphics}!draw\-Star@{draw\-Star}}
+\index{draw\-Star@{draw\-Star}!Graphics@{Graphics}}
+\subsubsection[{draw\-Star}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-draw\-Star (
+\begin{DoxyParamCaption}
+\item[{Ecran\-Graphique}]{window, }
+\item[{{\bf Point}}]{star}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a5678ce0ca6a9a8fedf3fe15993419280}
+
+
+Dessine les etoiles. 
+
+\begin{DoxyAuthor}{Auteurs}
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_acdb4c64b7fb63fc7296082ce4393a67e}{\index{Graphics@{Graphics}!fill\-Rectangle@{fill\-Rectangle}}
+\index{fill\-Rectangle@{fill\-Rectangle}!Graphics@{Graphics}}
+\subsubsection[{fill\-Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-fill\-Rectangle (
+\begin{DoxyParamCaption}
+\item[{{\bf Rectangle}}]{rectangle, }
+\item[{Ecran\-Graphique}]{window, }
+\item[{{\bf Color}}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_acdb4c64b7fb63fc7296082ce4393a67e}
+
+
+Fonction de base pour dessiner un rectangle plein. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classGraphics_ad24b32a0c3afa9eec70ba4480a23a3f7}{\index{Graphics@{Graphics}!init\-Stars@{init\-Stars}}
+\index{init\-Stars@{init\-Stars}!Graphics@{Graphics}}
+\subsubsection[{init\-Stars}]{\setlength{\rightskip}{0pt plus 5cm}static void Graphics.\-init\-Stars (
+\begin{DoxyParamCaption}
+\item[{{\bf Point}}]{stars\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_ad24b32a0c3afa9eec70ba4480a23a3f7}
+
+
+Prepare les etoiles a etre dessinees. 
+
+\begin{DoxyAuthor}{Auteurs}
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+
+
+\subsection{Documentation des données membres}
+\hypertarget{classGraphics_a3622c075b72c6c266ee72ca04988ab3f}{\index{Graphics@{Graphics}!focus\-On\-Elevator@{focus\-On\-Elevator}}
+\index{focus\-On\-Elevator@{focus\-On\-Elevator}!Graphics@{Graphics}}
+\subsubsection[{focus\-On\-Elevator}]{\setlength{\rightskip}{0pt plus 5cm}boolean Graphics.\-focus\-On\-Elevator = true\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a3622c075b72c6c266ee72ca04988ab3f}
+
+
+Boolean decidant si l'on centre sur l'ascenceur ou non. 
+
+\hypertarget{classGraphics_a0ce58ea07f00e09025d11fb9c9085b1b}{\index{Graphics@{Graphics}!view\-Direction@{view\-Direction}}
+\index{view\-Direction@{view\-Direction}!Graphics@{Graphics}}
+\subsubsection[{view\-Direction}]{\setlength{\rightskip}{0pt plus 5cm}short Graphics.\-view\-Direction = 0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a0ce58ea07f00e09025d11fb9c9085b1b}
+
+
+Sert si l'on ne centre pas au scrolling avec 'O' et 'L'. 
+
+\hypertarget{classGraphics_a005723dda272a11cb27933d59f4d90af}{\index{Graphics@{Graphics}!y\-Offset@{y\-Offset}}
+\index{y\-Offset@{y\-Offset}!Graphics@{Graphics}}
+\subsubsection[{y\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}double Graphics.\-y\-Offset = 0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classGraphics_a005723dda272a11cb27933d59f4d90af}
+
+
+Offset servant au scrolling. 
+
+
+
+La documentation de cette classe a été générée à partir du fichier suivant \-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Graphics_8java}{Graphics.\-java}\end{DoxyCompactItemize}

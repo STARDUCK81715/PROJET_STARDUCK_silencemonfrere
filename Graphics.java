@@ -1,3 +1,18 @@
+/**
+* \file Graphics.java
+* \brief Moteur graphique 
+* \authors Ervan Silvert
+* \authors Paul-Armand Michaud
+*/
+
+
+/**
+* \class Graphics
+* \brief Moteur graphique pour un meilleur control
+* \authors Ervan Silvert
+* \authors Paul-Armand Michaud
+*/
+
 public class Graphics
 {
 
@@ -14,8 +29,20 @@ public class Graphics
 
       Merci.
     */ 
+
+    /**
+     * \brief Offset servant au scrolling
+     */
     static double yOffset = 0;
+
+    /**
+     * \brief Boolean decidant si l'on centre sur l'ascenceur ou non.
+     */
     static boolean focusOnElevator = true;
+
+    /**
+     * \brief Sert si l'on ne centre pas au scrolling avec 'O' et 'L'
+     */
     static short viewDirection = 0; // comme elevator.direction : -1 vers le bas, 0 no move, 1 vers le haut
 
 
@@ -23,6 +50,12 @@ public class Graphics
     /*                                                  STRUCTURES                                          */
     /* ==================================================================================================== */
 
+    /**
+     * \class Rectangle
+     * \brief Structure servant a modeliser un rectangle
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static class Rectangle
     {
 	double width = Defines.FLOOR_WIDTH ; // Usual floor size
@@ -31,6 +64,12 @@ public class Graphics
 	double y = -1 ;
     }
 
+    /**
+     * \class Color
+     * \brief Structure servant a modeliser une couleur
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static class Color
     {
 	int r = 0;
@@ -38,6 +77,12 @@ public class Graphics
 	int b = 0;
     }
     
+    /**
+     * \class Point
+     * \brief Structure servant a modeliser un point evoluant ou non en fonction de l'offset 
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static class Point
     // A point in this project only need the coordinates and an offset to know how to be place regarding the scrolling
     {
@@ -57,7 +102,11 @@ public class Graphics
     /*                                                  METHODS                                             */
     /* ==================================================================================================== */
 
-
+    /**
+     * \brief Constructeur de couleur (R,G,B)
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static Color createNewColor(double r, double g, double b)
     // Construct a new color regard the RGB code
     {
@@ -68,7 +117,12 @@ public class Graphics
 	return color;
     }
     
-    
+
+    /**
+     * \brief Dessine les etages de l'immeuble
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void drawFloors(ElevatorProject.Building building, EcranGraphique window)
     // This method call all the methods regarding the floors aspect.
     {
@@ -113,6 +167,40 @@ public class Graphics
 						);
 			    }
 
+			// CALL BUTTON
+			final int buttonSize = 10;
+			//border
+			window.setColor(20, 20, 20);
+			window.drawRect( (int)(left.x + left.width - buttonSize - Defines.MARGIN),
+					 (int)(left.y + left.height / 2 - buttonSize / 2 ),
+					 buttonSize,
+					 buttonSize
+					 );
+
+			// someone waiting
+			if(currentFloor.passengers > 0 && System.currentTimeMillis() % 1000 >= 500) 
+			    {
+				window.setColor(0, 128, 55);
+				window.fillRect( (int)(left.x + left.width - buttonSize - Defines.MARGIN),
+						 (int)(left.y + left.height / 2 - buttonSize / 2 ),
+						 buttonSize,
+						 buttonSize
+						 );
+			    }
+
+			// someone want to exit here
+			if(building.elevator.destinationList[lastLevel -1 - i] > 0 && System.currentTimeMillis() % 1000 < 500 ) 
+			    {
+				window.setColor(128, 0, 0);
+				window.fillRect( (int)(left.x + left.width - buttonSize - Defines.MARGIN),
+						 (int)(left.y + left.height / 2 - buttonSize / 2 ),
+						 buttonSize,
+						 buttonSize
+						 );
+			    }
+
+
+
 			// PASSENGERS
 			drawPassengersInFloor(left, right,currentFloor.passengers, window);
 		
@@ -124,15 +212,6 @@ public class Graphics
 				  window, // where
 				  createNewColor(150,150,150) // which color
 				  );
-
-			// not useful anymore right ?
-			// //Drawing the time to wait 
-			// drawPanel(left.x + left.width - nbPassenger.length() * Defines.CHAR_WIDTH, // x
-			// 	  left.y + 1.0 / 3.0 * left.height, // y
-			// 	  Long.toString(building.elevator.timeToWait), // what
-			// 	  window, // where 
-			// 	  createNewColor(150,150,150) // which color
-			// 	  );
 
 			// Drawing the number of the floor
 			String index = "Floor number:" + Integer.toString((int)(lastLevel - i));
@@ -156,15 +235,27 @@ public class Graphics
 
     }
 
+
+    /**
+     * \brief Fonction de base qui dessine un texte encadre
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void drawPanel(double x, double y , String writting, EcranGraphique window, Color color)
     // Draws a text in a rectangle. A panel somehow.
     {
-	window.setColor(color.r,color.g,color.b);
+	window.setColor(color.r, color.g, color.b);
 	int size = writting.length();
-	window.drawText((int)(x),(int)(y), window.COLABA8x13,writting);
-	window.drawRect((int)(x-5),(int)(y-Defines.CHAR_HEIGHT),(int)(size*Defines.CHAR_WIDTH+5),Defines.CHAR_HEIGHT+2);
+	window.drawText( (int)(x), (int)(y), window.COLABA8x13, writting);
+	window.drawRect( (int)(x-5), (int)(y - Defines.CHAR_HEIGHT), (int)(size * Defines.CHAR_WIDTH + 5) , Defines.CHAR_HEIGHT + 2);
     }
     
+
+    /**
+     * \brief Dessine l'assenceur et ses passagers
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void drawElevator(ElevatorProject.Elevator elevator, EcranGraphique window, double dt)
     // Draws everything regarding the elevator.
     {
@@ -181,11 +272,11 @@ public class Graphics
 	rectangle.y = yOffset + Defines.FLOOR_HEIGHT * (position); // POSITION * FLOORS_HEIGH
 
 	// INTERPOLATING
-	double x = dt / 1000.0; // x as f(x) = interpolate(x)
+	double x = dt / (float)Defines.LAG_TIME; // x as f(x) = interpolate(x)
 	double interpolation = 1 * x;
 
 	// if the elevator is moving 
-	if( elevator.timeAtGo  < System.currentTimeMillis()  ) // TODO : Jouer sur les arrondis pour que le graphismes ne parte pas trop tot
+	if( elevator.canGo  ) 
 	    {
 		rectangle.y -= (float)(elevator.direction) * interpolation / (float)Defines.FLOOR_HEIGHT_METERS * Defines.FLOOR_HEIGHT;		
 	    }
@@ -203,7 +294,8 @@ public class Graphics
 		double xOffset = 0;
 		double numberMaxInWidth = (rectangle.width / Defines.PASSENGER_WIDTH);
 		xOffset = i / numberMaxInWidth;
-		drawPassenger(rectangle.x + (i % numberMaxInWidth) * Defines.PASSENGER_WIDTH + xOffset, rectangle.y + rectangle.height / 3.0, window, createNewColor(0, 128, 255));
+		drawPassenger(rectangle.x + (i % numberMaxInWidth) * Defines.PASSENGER_WIDTH + xOffset, rectangle.y + rectangle.height - Defines.PASSENGER_HEIGHT, window, createNewColor(0, 128, 
+255));
 	    }
 
 	// Drawing number of passenger (its colors tends to the red with the number of passengers)
@@ -217,23 +309,26 @@ public class Graphics
 		  );
 
 
-	// updating focusing elevator (here beacause of easier access to data instead of recalculating it somewhere else) 
-	if(focusOnElevator)
-	    {
-		yOffset = (yOffset > -rectangle.y) 
-		    ? yOffset - Defines.BASIC_OFFSET 
-		    : yOffset;
-		yOffset = (yOffset < -rectangle.y) 
-		    ? yOffset + Defines.BASIC_OFFSET 
-		    : yOffset;
+	// updating foc// using elevator (here beacause of easier access to data instead of recalculating it somewhere else) 
+	// if(focusOnElevator)
+	//     {
+	// 	yOffset = (yOffset > -rectangle.y) 
+	// 	    ? yOffset - Defines.BASIC_OFFSET 
+	// 	    : yOffset;
+	// 	yOffset = (yOffset < -rectangle.y) 
+	// 	    ? yOffset + Defines.BASIC_OFFSET 
+	// 	    : yOffset;
 
-	    }
+	//     }
 	
     }
 
 
-    /// HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-
+    /**
+     * \brief Dessine le batiment et ses composants
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void drawBuilding(ElevatorProject.Building building, EcranGraphique window)
     // Calls all the methods to draw a building and draw its skull.
     {
@@ -247,6 +342,12 @@ public class Graphics
 	fillRectangle(rectangle, window, createNewColor(232, 214, 163)); // Here is the building color
     }
 
+
+    /**
+     * \brief Dessine les passagers a l'interieur de l'etage
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void drawPassengersInFloor(Rectangle left, Rectangle right, int passengers, EcranGraphique window)
     {
 	for(short i = 0; i < passengers; i++)
@@ -283,6 +384,12 @@ public class Graphics
 	    }
     }
 
+
+    /**
+     * \brief Fonction de base pour dessiner un passager
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void drawPassenger(double x, double y, EcranGraphique window, Color color)
     // Basic method to draw a passenger. All of them are drawn by this method.
     {
@@ -291,6 +398,12 @@ public class Graphics
 	window.fillCircle((int)x, (int)y, (int)(0.03 * Defines.FLOOR_HEIGHT)); // head 
     }
 
+
+    /**
+     * \brief Fonction de base pour dessiner un rectangle
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void drawRectangle(Rectangle rectangle, EcranGraphique window , Color color)
     // Personal method to draw our own rectangle.
     {
@@ -298,6 +411,12 @@ public class Graphics
 	window.drawRect( (int)rectangle.x, (int)rectangle.y, (int)rectangle.width, (int)rectangle.height);
     }
 
+
+    /**
+     * \brief Fonction de base pour dessiner un rectangle plein
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void fillRectangle(Rectangle rectangle, EcranGraphique window , Color color)
     // Personal method to draw our own filled rectangle.
     {
@@ -305,7 +424,11 @@ public class Graphics
 	window.fillRect( (int)rectangle.x, (int)rectangle.y, (int)rectangle.width, (int)rectangle.height);
     }
     
-
+    /**
+     * \brief Constructeur de EcranGraphique
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static EcranGraphique createNewEcranGraphique()
     // Return a new EcranGraphic already initialized (with constants before).
     {
@@ -329,6 +452,11 @@ public class Graphics
     /*                              METHODS TO DRAW THE DETAILS                                             */
     /* ==================================================================================================== */
 
+
+    /**
+     * \brief Prepare les etoiles a etre dessinees
+     * \authors Paul-Armand Michaud
+     */
     static void initStars(Point stars[])
     {
 	for(int i = 0; i < stars.length; i++)
@@ -337,6 +465,10 @@ public class Graphics
 	    }
     }
 
+    /**
+     * \brief Dessine le ciel et ses composants
+     * \authors Paul-Armand Michaud
+     */
     static void drawSky(EcranGraphique window, Point[] stars, double yOffset)
     // Actually, draws the stars
     {
@@ -355,6 +487,10 @@ public class Graphics
 	    }
     }
 
+    /**
+     * \brief Dessine les etoiles
+     * \authors Paul-Armand Michaud
+     */
     static void drawStar(EcranGraphique window, Point star)
     // Basic method to draw a star.
     {
@@ -369,6 +505,10 @@ public class Graphics
 	window.fillCircle(x, (int)star.y + (int)star.offset, starRadius);	
     }
 
+    /**
+     * \brief Dessine le sol
+     * \authors Paul-Armand Michaud
+     */
     static void drawGround(EcranGraphique window, ElevatorProject.Building building, double yOffset)
     {
 	    //Draws the grass on the floor
@@ -386,6 +526,11 @@ public class Graphics
     /*                                                  MAIN METHOD                                         */
     /* ==================================================================================================== */
 
+    /**
+     * \brief Fonction principale qui dessine un batiment
+     * \authors Paul-Armand Michaud
+     * \authors Ervan Silvert
+     */
     static void draw(ElevatorProject.Building building, EcranGraphique window, double dt, Point[] stars)
     {
 	window.clear();
@@ -403,7 +548,8 @@ public class Graphics
 		// un - centering the elevator
 		{
 		    focusOnElevator = !focusOnElevator;
-		    yOffset = - building.elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS * Defines.FLOOR_HEIGHT; // Put the screen on the elevator on 'c' - type.
+		    yOffset = Defines.BORDER_GAP + ( building.floors.length -  building.elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS ) * Defines.FLOOR_HEIGHT - Defines.WINDOW_SIZE / 2; // Put the screen on the elevator on 'c' - type.
+		    yOffset *= -1;
 		} break;
 	    }
 	//
@@ -413,7 +559,12 @@ public class Graphics
 	    {
 		yOffset = yOffset + (float)(-viewDirection) * Defines.BASIC_OFFSET;
 	    }
-	else{ /* TO DO */ /* update on the elevator drawing in order to calculate only once */ }
+	else
+	    { 
+		/* update on the elevator drawing in order to calculate only once */ 
+		double interpolation =  (building.elevator.canGo) ? dt/(float)Defines.LAG_TIME * (float)building.elevator.direction   : 0 ;
+		yOffset =  ( interpolation + (float)building.elevator.positionByHeight) / (float)Defines.FLOOR_HEIGHT_METERS * (float)Defines.FLOOR_HEIGHT -   (float)Defines.WINDOW_SIZE / 3.0;
+	    }
 	//
 
 	// DRAW

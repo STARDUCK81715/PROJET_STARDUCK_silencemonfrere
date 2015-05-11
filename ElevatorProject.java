@@ -1,16 +1,45 @@
-// SILVERT Ervan & MICHAUD Paul-Armand
+/**
+* \file ElevatorProject.java
+* \brief Moteur physique - Simulation de l'ascenceur
+* \authors Ervan Silvert
+* \authors Paul-Armand Michaud
+*/
+
+
+/**
+* \class ElevatorProject
+* \brief Moteur physique
+* \authors Ervan Silvert
+* \authors Paul-Armand Michaud
+*/
 
 public class ElevatorProject
 {
-     static int timePassed=0; //counting time according to the subject
+    /**    
+     * \brief Compte le temps ecoule depuis le debut de la simulation en accord avec le sujet
+     */
+     static int timePassed = 0; //counting time according to the subject
 	
     /* ========= CLASS DECLARATION ============== */ 
+
+    /**
+     * \class Building
+     * \brief Structure servant a transporter toutes les donnees. Contient les etages et l'ascenceur.
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static class Building
     {
 	Elevator elevator;
 	Floor[] floors; // the whole floors
     };
-	
+
+    /**
+     * \class Elevator
+     * \brief Structure represantant l'ascenceur contenant les passagers, sa position, sa direction et son timing.
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */	
     static class Elevator
     {
 	short CAPACITY = -1; // Can't be constant due to hand initialization 
@@ -19,11 +48,16 @@ public class ElevatorProject
 	short passengers = 0;
 	short[] waitingList; // The list of the floor with the number of passengers waiting
 	short[] destinationList; // The list of the floor with the number of passengers inside the elevator who will quit
-
-	long timeAtGo = 0; // once the current time join this one the elevator can move
+	boolean canGo = true;
 
     };
 
+    /**
+     * \class Floor
+     * \brief Structure representant un etage, contenant les passagers et une probability d'apparition d'un nouveau passager
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static class Floor
     {
 	double probability = Math.random() / 10.0; // Probability that someone appears
@@ -33,6 +67,11 @@ public class ElevatorProject
 	
 	
     /* =========== INITIALIZATION FUNCTIONS ============ */	
+    /**
+     * \brief Constructeur de Building
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static Building createNewBuilding(short nFloor)
     // Return a new building with all members initialized.
     {
@@ -47,7 +86,12 @@ public class ElevatorProject
 	    }
 	return building;
     }
-	
+    
+    /**
+     * \brief Constructeur d'Elevator
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */	
     static Elevator createNewElevator(short nFloor)
     // Return a new elevator with all members initialized.
     {
@@ -67,6 +111,11 @@ public class ElevatorProject
 	return elevator;
     }
     
+    /**
+     * \brief Rentre manuellement le nombre d'etage
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static short askForNumberFloors()
     // Return a valid number of floors from the user.
     {
@@ -76,6 +125,11 @@ public class ElevatorProject
 	return nFloors;
     }
 
+    /**
+     * \brief Verifie la validite d'un nombre entre deux bornes
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void verifyInBetween(double number, int min, int max)
     // Ask for a number until the condition is true.
     {
@@ -86,12 +140,24 @@ public class ElevatorProject
 	    }
     }
 
+
+    /**
+     * \brief Fait apparaitre les passagers et evoluer l'ascenceur
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void update(Building building)
     {
         manageApparition(building); // Toss a coin to know if someone appears for each floor
 	updateElevator(building) ; // Va appeler move et decharge
     }
 
+
+    /**
+     * \brief Gere l'apparition des passagers
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void manageApparition(Building building)
     {
 	// for each floor
@@ -104,24 +170,28 @@ public class ElevatorProject
 		    {
 			// we had a passenger
 			currentFloor.passengers += 1;
-			
-			// and update the elevator timetowait if here
-			if(
-			   building.elevator.positionByHeight/Defines.FLOOR_HEIGHT_METERS == i 
-			   &&  building.elevator.passengers < building.elevator.CAPACITY)
-			    {
-				building.elevator.timeAtGo += Defines.WAITING_TIME_PER_PASSENGER;
-			    }
 		    }
 	    }
     }
 
+
+    /**
+     * \brief Renvoie aleatoirement vrai ou faux selon un facteur de probabilite
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static boolean tossProbility(double probability)
     // toss a coin 
     {
 	return Math.random() <= probability;
     }
 
+
+    /**
+     * \brief Met a jour la liste d'attente de l'asecenceur
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void manageCalls(Building building)
     // each update floor the elevator's waiting list
     {
@@ -132,49 +202,52 @@ public class ElevatorProject
 	    }
     }
 
+
+    /**
+     * \brief Met a jour l'ascenceur et son mouvement
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void updateElevator(Building building) 
     // Move & unstack passengers
     {
-	manageCalls(building); // update the waiting list
+	manageCalls(building); // synchronize the waiting list
 
-	if( building.elevator.timeAtGo / 1000 < System.currentTimeMillis() / 1000 ) 	
+	if( building.elevator.canGo ) 	
 	    {moveElevator(building.elevator);} // move the elevator
 
 	if(building.elevator.positionByHeight % Defines.FLOOR_HEIGHT_METERS == 0)
 	    // Nous sommes à un étage
 	    {
-	        updateElevatorTiming(building); // time at arrive
-		if( !unstackElevator(building.elevator) ) stackInElevator(building); // let passengers moving
+		building.elevator.canGo = !unstackElevator(building.elevator);
+		if( building.elevator.canGo  ) building.elevator.canGo = !stackInElevator(building); // let passengers moving
 		updateDirection(building.elevator); // update the direction
 	    }     
     }
 
-    static void updateElevatorTiming(Building building)
-    {
-    	// if we just arrive at the floor
-	if(building.elevator.timeAtGo / 1000 < System.currentTimeMillis() / 1000 )
-	    {
-	        building.elevator.timeAtGo = System.currentTimeMillis() / 1000 * 1000  ; // rounded to the second
-		short position = (short) (building.elevator.positionByHeight / Defines.FLOOR_HEIGHT_METERS) ;
-		short nEnter = (short) Math.min(building.elevator.CAPACITY - building.elevator.passengers, building.floors[position].passengers );
-		short nQuit = building.elevator.destinationList[position];
 
-		// Ajout du temps
-		building.elevator.timeAtGo += Defines.WAITING_TIME_PER_PASSENGER * ( nEnter + nQuit );
-	    }
-    }
-
+    /**
+     * \brief Permet a l'ascenceur de bouger
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void moveElevator(Elevator elevator)
     {
 	if(
-	   (elevator.positionByHeight+elevator.direction) / Defines.FLOOR_HEIGHT_METERS <= elevator.waitingList.length - 1  // security
+	   (elevator.positionByHeight + elevator.direction) / Defines.FLOOR_HEIGHT_METERS <= elevator.waitingList.length - 1  // security
 	   && (elevator.positionByHeight + elevator.direction) / Defines.FLOOR_HEIGHT_METERS >= 0 // security // the waiting time passed
 	   ) 
 	    {
 		elevator.positionByHeight += elevator.direction;
 	    }
-	
     }
+
+
+    /**
+     * \brief Decharge l'ascenceur
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static boolean unstackElevator(Elevator elevator)
     // Let the passengers going out
     {
@@ -189,9 +262,14 @@ public class ElevatorProject
 		return true;
 	    }
 	return false;
-
     }
 
+
+    /**
+     * \brief Charge l'ascenceur
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static boolean stackInElevator(Building building)
     // Let the passengers going in
     {
@@ -210,6 +288,12 @@ public class ElevatorProject
 	return false;
     }
 
+
+    /**
+     * \brief Ajoute aleatoirement un appel a la liste de l'ascenceur
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void addRandomLocation(Elevator elevator)
     // Add randomly a location to the elevator(s destination list
     {
@@ -220,11 +304,16 @@ public class ElevatorProject
 	    {
 		randomLocation = (short)(Math.random() * elevator.waitingList.length);
 		
-	    } while( randomLocation == currentPosition );
+	    } while( randomLocation == currentPosition || elevator.waitingList.length <= 1);
 	
 	elevator.destinationList[randomLocation]++;
     }
 
+    /**
+     * \brief Met a jour la direction de l'ascenceur conformement au cahier des charges.
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static void updateDirection(Elevator elevator)
     // The main algorithm, it decides where the elevator goes
     {
@@ -269,14 +358,25 @@ public class ElevatorProject
 	    }
     }
 
+
+    /**
+     * \brief Retourne le signe d'une expression
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     static short signOf(short i)
     {
 	if(i < 0){return -1;}
 	if(i > 0){return 1;}
 	if(i == 0){return 0;}
-	return 0;
+	return 0; // Oh, java ...
     }
 
+    /**
+     * \brief Initialistation et boucle de la simulation
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     public static void main(String args[])
     {
 	/*=============INITIAL STATE===============*/
@@ -285,8 +385,6 @@ public class ElevatorProject
 
 	long  loopTime = 0; // record the time passed during a loop
 	double toSecond = 0; // record the wolhe time passed to know when a second passed.
-	 
-	
 	    
 	Graphics.Point stars[] = new Graphics.Point[Defines.N_STARS];
 	Graphics.initStars(stars);
@@ -296,23 +394,23 @@ public class ElevatorProject
 		 // Get the start time
 		loopTime =  System.currentTimeMillis();
 		
-		
 		// We update the data (and the appearing ratio) every second
 		if(toSecond >= Defines.LAG_TIME) 
 		    {
 			update(building); 
 			toSecond = 0; // Reinit to 0 the time passed
-			timePassed+=1;
+			timePassed += 1; // TODO EN ARGUMENT 
 			
 		    } 
 
 		Graphics.draw(building, window, toSecond, stars); // But we draw all the time
 		Interface.update(building, window); // update the textuals drawings
+
 		window.flush(); // print the drawings 
 
-		toSecond = System.currentTimeMillis() - (double)loopTime + toSecond; // counting the passed time.
-		
+		toSecond += System.currentTimeMillis() - (double)loopTime; // counting the passed time.
 	    }
+
 	window.exit();
 	
 	/*=============UPDATE==================*/

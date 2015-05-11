@@ -1,0 +1,25 @@
+var classDefines =
+[
+    [ "BASIC_OFFSET", "classDefines.html#ab31317d73c21ddc857f1d9cac254cd51", null ],
+    [ "BORDER_GAP", "classDefines.html#ae1cb2849525afcbee188dd5681a29f2f", null ],
+    [ "CHAR_HEIGHT", "classDefines.html#aefdb64aa2941d347830f576d61bd941f", null ],
+    [ "CHAR_WIDTH", "classDefines.html#a35af074df13dcc76204831f1910d2353", null ],
+    [ "ELEVATOR_HEIGHT", "classDefines.html#abe0b8ba696fb8c7c3834901f0d1d654e", null ],
+    [ "ELEVATOR_WIDTH", "classDefines.html#a6db91ad53210c6221ec3539abdd86888", null ],
+    [ "FLOOR_HEIGHT", "classDefines.html#a2a43fe315bf385b8693c70fbf824a3d0", null ],
+    [ "FLOOR_HEIGHT_METERS", "classDefines.html#aae6f35fc0dc85e4189f0be67c6af6fb1", null ],
+    [ "FLOOR_WIDTH", "classDefines.html#ad5528ce6b91911a4ca4e9f364543ef9c", null ],
+    [ "LAG_TIME", "classDefines.html#a496860d61bb30a925275bfde3ddc3b20", null ],
+    [ "MARGIN", "classDefines.html#a9fd7f260f375ce1a158c1b5d7f7b5723", null ],
+    [ "MAX_LIMIT_FLOORS", "classDefines.html#af60ebfd414a20ac9a7071d1d2a8cddca", null ],
+    [ "N_STARS", "classDefines.html#a9b91f7213bd4f6c0b70df0e9903c7691", null ],
+    [ "PASSENGER_HEIGHT", "classDefines.html#a651291f3b8a00e1e92a7275cf3d2430e", null ],
+    [ "PASSENGER_WIDTH", "classDefines.html#a0cfe94bdf035c76ba9900a7022cef92b", null ],
+    [ "QUIT_CHARACTER", "classDefines.html#a5e2c85208d5085083f98e27eb616e56a", null ],
+    [ "RESOLUTION", "classDefines.html#acd16804e8dcad6ce6fe8ad2e1b3f99e0", null ],
+    [ "WAITING_TIME_PER_PASSENGER", "classDefines.html#aece514c1581f2329ad852547b512827c", null ],
+    [ "WINDOW_SIZE", "classDefines.html#aafb660e1c1534aec4d2cee6cfe57029f", null ],
+    [ "WINDOW_TITLE", "classDefines.html#a4f7489d3112fc05c39005576c0783f92", null ],
+    [ "WINDOW_X", "classDefines.html#a191ee33a73c60eed6efed2b7dfd5947d", null ],
+    [ "WINDOW_Y", "classDefines.html#a15d26191713a84100e6850d2ba539d8f", null ]
+];

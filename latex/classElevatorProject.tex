@@ -1,0 +1,364 @@
+\hypertarget{classElevatorProject}{\section{Référence de la classe Elevator\-Project}
+\label{classElevatorProject}\index{Elevator\-Project@{Elevator\-Project}}
+}
+
+
+Moteur physique.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classElevatorProject_1_1Building}{Building}
+\begin{DoxyCompactList}\small\item\em Structure servant a transporter toutes les donnees. Contient les etages et l'ascenceur. \end{DoxyCompactList}\item 
+class \hyperlink{classElevatorProject_1_1Elevator}{Elevator}
+\begin{DoxyCompactList}\small\item\em Structure represantant l'ascenceur contenant les passagers, sa position, sa direction et son timing. \end{DoxyCompactList}\item 
+class \hyperlink{classElevatorProject_1_1Floor}{Floor}
+\begin{DoxyCompactList}\small\item\em Structure representant un etage, contenant les passagers et une probability d'apparition d'un nouveau passager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Fonctions membres publiques statiques}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classElevatorProject_a18ef2bd967dfa94e002e6faaf047300b}{main} (String args\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Initialistation et boucle de la simulation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Fonctions statiques de paquetage}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classElevatorProject_1_1Building}{Building} \hyperlink{classElevatorProject_a657ce804b44b8e8704b46bfa470c88ba}{create\-New\-Building} (short n\-Floor)
+\begin{DoxyCompactList}\small\item\em Constructeur de \hyperlink{classElevatorProject_1_1Building}{Building}. \end{DoxyCompactList}\item 
+static \hyperlink{classElevatorProject_1_1Elevator}{Elevator} \hyperlink{classElevatorProject_a6e31a130d7dacb20e2a9fc1748f2d213}{create\-New\-Elevator} (short n\-Floor)
+\begin{DoxyCompactList}\small\item\em Constructeur d'\hyperlink{classElevatorProject_1_1Elevator}{Elevator}. \end{DoxyCompactList}\item 
+static short \hyperlink{classElevatorProject_a73fd23b9f885bf2ff238ad8d18544d7e}{ask\-For\-Number\-Floors} ()
+\begin{DoxyCompactList}\small\item\em Rentre manuellement le nombre d'etage. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_ae4d75a305a2ccd0070c03452d2fbd518}{verify\-In\-Between} (double number, int min, int max)
+\begin{DoxyCompactList}\small\item\em Verifie la validite d'un nombre entre deux bornes. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_a1bbb614922117d8a18e09f2f40a3515b}{update} (\hyperlink{classElevatorProject_1_1Building}{Building} building)
+\begin{DoxyCompactList}\small\item\em Fait apparaitre les passagers et evoluer l'ascenceur. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_a15b19619f06b6408b657b637d69c9311}{manage\-Apparition} (\hyperlink{classElevatorProject_1_1Building}{Building} building)
+\begin{DoxyCompactList}\small\item\em Gere l'apparition des passagers. \end{DoxyCompactList}\item 
+static boolean \hyperlink{classElevatorProject_a5ec35e7e25ad0689872b3e1801881363}{toss\-Probility} (double probability)
+\begin{DoxyCompactList}\small\item\em Renvoie aleatoirement vrai ou faux selon un facteur de probabilite. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_a47e8310e972ae9a6f5b97e61af75b733}{manage\-Calls} (\hyperlink{classElevatorProject_1_1Building}{Building} building)
+\begin{DoxyCompactList}\small\item\em Met a jour la liste d'attente de l'asecenceur. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_a728434fe5435fc78b48a67bd14cafd41}{update\-Elevator} (\hyperlink{classElevatorProject_1_1Building}{Building} building)
+\begin{DoxyCompactList}\small\item\em Met a jour l'ascenceur et son mouvement. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_ab5a957a536f530da15ccd513441a5dce}{update\-Elevator\-Timing} (\hyperlink{classElevatorProject_1_1Building}{Building} building)
+\begin{DoxyCompactList}\small\item\em Met a jour la date de départ de l'asceneur une fois arrive a l'etage. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_a5db832b5592e8a9229dc15abdd4430aa}{move\-Elevator} (\hyperlink{classElevatorProject_1_1Elevator}{Elevator} elevator)
+\begin{DoxyCompactList}\small\item\em Permet a l'ascenceur de bouger. \end{DoxyCompactList}\item 
+static boolean \hyperlink{classElevatorProject_a1f44c119fd987a5fac357244fbfe93bc}{unstack\-Elevator} (\hyperlink{classElevatorProject_1_1Elevator}{Elevator} elevator)
+\begin{DoxyCompactList}\small\item\em Decharge l'ascenceur. \end{DoxyCompactList}\item 
+static boolean \hyperlink{classElevatorProject_a7cb85c87b7466ac344bfb6f6681835ca}{stack\-In\-Elevator} (\hyperlink{classElevatorProject_1_1Building}{Building} building)
+\begin{DoxyCompactList}\small\item\em Charge l'ascenceur. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_a77dc39b7be58598bdeb1ea046fba80bd}{add\-Random\-Location} (\hyperlink{classElevatorProject_1_1Elevator}{Elevator} elevator)
+\begin{DoxyCompactList}\small\item\em Ajoute aleatoirement un appel a la liste de l'ascenceur. \end{DoxyCompactList}\item 
+static void \hyperlink{classElevatorProject_a3fa954118cf63e69d6c949723e93f19f}{update\-Direction} (\hyperlink{classElevatorProject_1_1Elevator}{Elevator} elevator)
+\begin{DoxyCompactList}\small\item\em Met a jour la direction de l'ascenceur conformement au cahier des charges. \end{DoxyCompactList}\item 
+static short \hyperlink{classElevatorProject_a864982da0944af7548bda913614faa57}{sign\-Of} (short i)
+\begin{DoxyCompactList}\small\item\em Retourne le signe d'une expression. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs statiques de paquetage}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classElevatorProject_ab748dd5a6fb42b4c2b83d4e6ad3138ba}{time\-Passed} = 0
+\begin{DoxyCompactList}\small\item\em Compte le temps ecoule depuis le debut de la simulation en accord avec le sujet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Moteur physique. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{classElevatorProject_a77dc39b7be58598bdeb1ea046fba80bd}{\index{Elevator\-Project@{Elevator\-Project}!add\-Random\-Location@{add\-Random\-Location}}
+\index{add\-Random\-Location@{add\-Random\-Location}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{add\-Random\-Location}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-add\-Random\-Location (
+\begin{DoxyParamCaption}
+\item[{{\bf Elevator}}]{elevator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a77dc39b7be58598bdeb1ea046fba80bd}
+
+
+Ajoute aleatoirement un appel a la liste de l'ascenceur. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a73fd23b9f885bf2ff238ad8d18544d7e}{\index{Elevator\-Project@{Elevator\-Project}!ask\-For\-Number\-Floors@{ask\-For\-Number\-Floors}}
+\index{ask\-For\-Number\-Floors@{ask\-For\-Number\-Floors}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{ask\-For\-Number\-Floors}]{\setlength{\rightskip}{0pt plus 5cm}static short Elevator\-Project.\-ask\-For\-Number\-Floors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a73fd23b9f885bf2ff238ad8d18544d7e}
+
+
+Rentre manuellement le nombre d'etage. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a657ce804b44b8e8704b46bfa470c88ba}{\index{Elevator\-Project@{Elevator\-Project}!create\-New\-Building@{create\-New\-Building}}
+\index{create\-New\-Building@{create\-New\-Building}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{create\-New\-Building}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Building} Elevator\-Project.\-create\-New\-Building (
+\begin{DoxyParamCaption}
+\item[{short}]{n\-Floor}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a657ce804b44b8e8704b46bfa470c88ba}
+
+
+Constructeur de \hyperlink{classElevatorProject_1_1Building}{Building}. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a6e31a130d7dacb20e2a9fc1748f2d213}{\index{Elevator\-Project@{Elevator\-Project}!create\-New\-Elevator@{create\-New\-Elevator}}
+\index{create\-New\-Elevator@{create\-New\-Elevator}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{create\-New\-Elevator}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Elevator} Elevator\-Project.\-create\-New\-Elevator (
+\begin{DoxyParamCaption}
+\item[{short}]{n\-Floor}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a6e31a130d7dacb20e2a9fc1748f2d213}
+
+
+Constructeur d'\hyperlink{classElevatorProject_1_1Elevator}{Elevator}. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a18ef2bd967dfa94e002e6faaf047300b}{\index{Elevator\-Project@{Elevator\-Project}!main@{main}}
+\index{main@{main}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-main (
+\begin{DoxyParamCaption}
+\item[{String}]{args\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classElevatorProject_a18ef2bd967dfa94e002e6faaf047300b}
+
+
+Initialistation et boucle de la simulation. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a15b19619f06b6408b657b637d69c9311}{\index{Elevator\-Project@{Elevator\-Project}!manage\-Apparition@{manage\-Apparition}}
+\index{manage\-Apparition@{manage\-Apparition}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{manage\-Apparition}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-manage\-Apparition (
+\begin{DoxyParamCaption}
+\item[{{\bf Building}}]{building}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a15b19619f06b6408b657b637d69c9311}
+
+
+Gere l'apparition des passagers. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a47e8310e972ae9a6f5b97e61af75b733}{\index{Elevator\-Project@{Elevator\-Project}!manage\-Calls@{manage\-Calls}}
+\index{manage\-Calls@{manage\-Calls}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{manage\-Calls}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-manage\-Calls (
+\begin{DoxyParamCaption}
+\item[{{\bf Building}}]{building}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a47e8310e972ae9a6f5b97e61af75b733}
+
+
+Met a jour la liste d'attente de l'asecenceur. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a5db832b5592e8a9229dc15abdd4430aa}{\index{Elevator\-Project@{Elevator\-Project}!move\-Elevator@{move\-Elevator}}
+\index{move\-Elevator@{move\-Elevator}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{move\-Elevator}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-move\-Elevator (
+\begin{DoxyParamCaption}
+\item[{{\bf Elevator}}]{elevator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a5db832b5592e8a9229dc15abdd4430aa}
+
+
+Permet a l'ascenceur de bouger. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a864982da0944af7548bda913614faa57}{\index{Elevator\-Project@{Elevator\-Project}!sign\-Of@{sign\-Of}}
+\index{sign\-Of@{sign\-Of}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{sign\-Of}]{\setlength{\rightskip}{0pt plus 5cm}static short Elevator\-Project.\-sign\-Of (
+\begin{DoxyParamCaption}
+\item[{short}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a864982da0944af7548bda913614faa57}
+
+
+Retourne le signe d'une expression. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a7cb85c87b7466ac344bfb6f6681835ca}{\index{Elevator\-Project@{Elevator\-Project}!stack\-In\-Elevator@{stack\-In\-Elevator}}
+\index{stack\-In\-Elevator@{stack\-In\-Elevator}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{stack\-In\-Elevator}]{\setlength{\rightskip}{0pt plus 5cm}static boolean Elevator\-Project.\-stack\-In\-Elevator (
+\begin{DoxyParamCaption}
+\item[{{\bf Building}}]{building}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a7cb85c87b7466ac344bfb6f6681835ca}
+
+
+Charge l'ascenceur. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a5ec35e7e25ad0689872b3e1801881363}{\index{Elevator\-Project@{Elevator\-Project}!toss\-Probility@{toss\-Probility}}
+\index{toss\-Probility@{toss\-Probility}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{toss\-Probility}]{\setlength{\rightskip}{0pt plus 5cm}static boolean Elevator\-Project.\-toss\-Probility (
+\begin{DoxyParamCaption}
+\item[{double}]{probability}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a5ec35e7e25ad0689872b3e1801881363}
+
+
+Renvoie aleatoirement vrai ou faux selon un facteur de probabilite. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a1f44c119fd987a5fac357244fbfe93bc}{\index{Elevator\-Project@{Elevator\-Project}!unstack\-Elevator@{unstack\-Elevator}}
+\index{unstack\-Elevator@{unstack\-Elevator}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{unstack\-Elevator}]{\setlength{\rightskip}{0pt plus 5cm}static boolean Elevator\-Project.\-unstack\-Elevator (
+\begin{DoxyParamCaption}
+\item[{{\bf Elevator}}]{elevator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a1f44c119fd987a5fac357244fbfe93bc}
+
+
+Decharge l'ascenceur. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a1bbb614922117d8a18e09f2f40a3515b}{\index{Elevator\-Project@{Elevator\-Project}!update@{update}}
+\index{update@{update}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-update (
+\begin{DoxyParamCaption}
+\item[{{\bf Building}}]{building}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a1bbb614922117d8a18e09f2f40a3515b}
+
+
+Fait apparaitre les passagers et evoluer l'ascenceur. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a3fa954118cf63e69d6c949723e93f19f}{\index{Elevator\-Project@{Elevator\-Project}!update\-Direction@{update\-Direction}}
+\index{update\-Direction@{update\-Direction}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{update\-Direction}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-update\-Direction (
+\begin{DoxyParamCaption}
+\item[{{\bf Elevator}}]{elevator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a3fa954118cf63e69d6c949723e93f19f}
+
+
+Met a jour la direction de l'ascenceur conformement au cahier des charges. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_a728434fe5435fc78b48a67bd14cafd41}{\index{Elevator\-Project@{Elevator\-Project}!update\-Elevator@{update\-Elevator}}
+\index{update\-Elevator@{update\-Elevator}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{update\-Elevator}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-update\-Elevator (
+\begin{DoxyParamCaption}
+\item[{{\bf Building}}]{building}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_a728434fe5435fc78b48a67bd14cafd41}
+
+
+Met a jour l'ascenceur et son mouvement. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_ab5a957a536f530da15ccd513441a5dce}{\index{Elevator\-Project@{Elevator\-Project}!update\-Elevator\-Timing@{update\-Elevator\-Timing}}
+\index{update\-Elevator\-Timing@{update\-Elevator\-Timing}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{update\-Elevator\-Timing}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-update\-Elevator\-Timing (
+\begin{DoxyParamCaption}
+\item[{{\bf Building}}]{building}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_ab5a957a536f530da15ccd513441a5dce}
+
+
+Met a jour la date de départ de l'asceneur une fois arrive a l'etage. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+\hypertarget{classElevatorProject_ae4d75a305a2ccd0070c03452d2fbd518}{\index{Elevator\-Project@{Elevator\-Project}!verify\-In\-Between@{verify\-In\-Between}}
+\index{verify\-In\-Between@{verify\-In\-Between}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{verify\-In\-Between}]{\setlength{\rightskip}{0pt plus 5cm}static void Elevator\-Project.\-verify\-In\-Between (
+\begin{DoxyParamCaption}
+\item[{double}]{number, }
+\item[{int}]{min, }
+\item[{int}]{max}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_ae4d75a305a2ccd0070c03452d2fbd518}
+
+
+Verifie la validite d'un nombre entre deux bornes. 
+
+\begin{DoxyAuthor}{Auteurs}
+Ervan Silvert 
+
+Paul-\/\-Armand Michaud 
+\end{DoxyAuthor}
+
+
+\subsection{Documentation des données membres}
+\hypertarget{classElevatorProject_ab748dd5a6fb42b4c2b83d4e6ad3138ba}{\index{Elevator\-Project@{Elevator\-Project}!time\-Passed@{time\-Passed}}
+\index{time\-Passed@{time\-Passed}!ElevatorProject@{Elevator\-Project}}
+\subsubsection[{time\-Passed}]{\setlength{\rightskip}{0pt plus 5cm}int Elevator\-Project.\-time\-Passed = 0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}}\label{classElevatorProject_ab748dd5a6fb42b4c2b83d4e6ad3138ba}
+
+
+Compte le temps ecoule depuis le debut de la simulation en accord avec le sujet. 
+
+
+
+La documentation de cette classe a été générée à partir du fichier suivant \-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{ElevatorProject_8java}{Elevator\-Project.\-java}\end{DoxyCompactItemize}

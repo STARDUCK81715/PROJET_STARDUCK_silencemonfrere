@@ -1,11 +1,29 @@
+/**
+* \file Interface.java
+* \brief Partie de controle de la simulation
+* \authors Ervan Silvert
+* \authors Paul-Armand Michaud
+*/
+
+
+/**
+* \class Interface
+* \brief Etude numerique de la situation actuelle et a venir.
+* \authors Ervan Silvert
+* \authors Paul-Armand Michaud
+*/
+
 public class Interface
 {
 
+    /**
+     * \brief Dessine le contenu et met a jour les donnees
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     public static void update(ElevatorProject.Building building, EcranGraphique window)
     {
-
 	drawMenu(building, window);
-
 	drawArrows(window);
 
 	switch(window.getMouseState())
@@ -18,6 +36,12 @@ public class Interface
 	    }
     }
 
+
+    /**
+     * \brief Dessine l'interface
+     * \authors Ervan Silvert
+     * \authors Paul-Armand Michaud
+     */
     public static void drawMenu(ElevatorProject.Building building, EcranGraphique window)
     {
 	/// BACKGROUND
@@ -61,6 +85,11 @@ public class Interface
 	//
     }
 
+
+    /**
+     * \brief Dessine les fleches
+     * \authors Ervan Silvert
+     */
     public static void drawArrows(EcranGraphique window)
     {
 	final int arrowSize = 30 ;
@@ -92,6 +121,11 @@ public class Interface
 	
     }
 
+
+    /**
+     * \brief Inactif la
+     * \authors Ervan Silvert
+     */
     public static void click(ElevatorProject.Building building, EcranGraphique window)
     {
 	// Update the mouse Position
@@ -100,6 +134,11 @@ public class Interface
 	// 
     }
 
+
+    /**
+     * \brief Inactif la
+     * \authors Ervan Silvert
+     */
     public static void updateMousePosition(int x, int y, EcranGraphique window)
     {
 	x = window.getMouseX();

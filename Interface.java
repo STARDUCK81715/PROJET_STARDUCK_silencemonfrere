@@ -24,7 +24,15 @@ public class Interface
     public static void update(ElevatorProject.Building building, EcranGraphique window)
     {
 	drawMenu(building, window);
-	drawArrows(window);
+	drawArrows(building, window);
+
+	switch(window.getKey())
+	    {
+	    default : break;
+	    case 'p' : ElevatorProject.LAG_TIME /= 2.0; break;
+	    case 'm' : ElevatorProject.LAG_TIME *= 2.0; break;
+	    }
+
 
 	switch(window.getMouseState())
 	    {
@@ -73,7 +81,13 @@ public class Interface
 	// TIME TO WAIT
 	window.setColor(64, 64, 0);
 	
-	// TO DO 
+	// TIME MULTIPLICATOR
+	window.drawText(
+			(int)(0.6 * menuWidth), //x
+			(int)(menuY + menuHeight * 0.3), //y
+			window.COLABA8x13, // format
+			"x : " + Integer.toString((int)(1000.0 / ElevatorProject.LAG_TIME)) // text
+			);
 
 	// ELAPSED TIME 
 	window.drawText(
@@ -90,7 +104,7 @@ public class Interface
      * \brief Dessine les fleches
      * \authors Ervan Silvert
      */
-    public static void drawArrows(EcranGraphique window)
+    public static void drawArrows(ElevatorProject.Building building, EcranGraphique window)
     {
 	final int arrowSize = 30 ;
 	
@@ -98,27 +112,36 @@ public class Interface
 	Graphics.Rectangle up = new Graphics.Rectangle();
 	up.x = Defines.WINDOW_SIZE - 2 * arrowSize;
 	up.width = arrowSize;
-	up. y = 2 * arrowSize ;
+	up. y = 2.0 / 3.0 * Defines.WINDOW_SIZE +  arrowSize ;
 	up.height = arrowSize ;
-	Graphics.drawRectangle(up, window, Graphics.createNewColor(255,255,255));
+	if(building.elevator.direction == 1)
+	    {Graphics.fillRectangle(up, window, Graphics.createNewColor(255,255,255));}
+	else
+	    {Graphics.drawRectangle(up, window, Graphics.createNewColor(255,255,255));}
+	
 
 	// LOWER ARROW
 	Graphics.Rectangle low = new Graphics.Rectangle();
 	low.x = Defines.WINDOW_SIZE - 2 * arrowSize;
 	low.width = arrowSize;
-	low. y = 4 * arrowSize ;
+	low. y = 2.0 / 3.0 * Defines.WINDOW_SIZE + 3 * arrowSize ;
 	low.height = arrowSize ;
-	Graphics.drawRectangle(low, window, Graphics.createNewColor(255,255,255));
-
+	if(building.elevator.direction == -1)
+	    {Graphics.fillRectangle(low, window, Graphics.createNewColor(255,255,255));}
+	else
+	    {Graphics.drawRectangle(low, window, Graphics.createNewColor(255,255,255));}
+	
 
 	// MIDDLE BUTTON
 	Graphics.Rectangle middle = new Graphics.Rectangle();
 	middle.x = Defines.WINDOW_SIZE - 2 * arrowSize;
 	middle.width = arrowSize;
-	middle. y = 3 * arrowSize ;
+	middle. y = 2.0 / 3.0 * Defines.WINDOW_SIZE + 2 * arrowSize ;
 	middle.height = arrowSize ;
-	Graphics.drawRectangle(middle, window, Graphics.createNewColor(255,255,255));
-	
+	if(Graphics.focusOnElevator)
+	    {Graphics.fillRectangle(middle, window, Graphics.createNewColor(0, 0, 128));}
+	else
+	    {Graphics.drawRectangle(up, window, Graphics.createNewColor(255,255,255));}
     }
 
 

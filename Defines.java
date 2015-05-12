@@ -49,12 +49,6 @@ public class Defines
      * \brief Temps a attendre pour chaque mouvement de passager
      */
     final static short WAITING_TIME_PER_PASSENGER = 1000; 
-
-    /**
-     * \brief Le temps entre deux update
-     */
-    // TO TEST
-    final static short LAG_TIME = 200 ; 
     
     /* VISUAL */ 
     
@@ -106,7 +100,7 @@ public class Defines
     /**
      * \brief Deplacement induit par une demande de scrolling
      */
-    final static double BASIC_OFFSET =  1000 / LAG_TIME; 
+    final static double BASIC_OFFSET =  1000 / ElevatorProject.LAG_TIME; 
 
     /**
      * \brief Nombre d'etoile dans le ciel

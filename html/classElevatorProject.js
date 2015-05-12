@@ -18,7 +18,6 @@ var classElevatorProject =
     [ "update", "classElevatorProject.html#a1bbb614922117d8a18e09f2f40a3515b", null ],
     [ "updateDirection", "classElevatorProject.html#a3fa954118cf63e69d6c949723e93f19f", null ],
     [ "updateElevator", "classElevatorProject.html#a728434fe5435fc78b48a67bd14cafd41", null ],
-    [ "updateElevatorTiming", "classElevatorProject.html#ab5a957a536f530da15ccd513441a5dce", null ],
     [ "verifyInBetween", "classElevatorProject.html#ae4d75a305a2ccd0070c03452d2fbd518", null ],
     [ "timePassed", "classElevatorProject.html#ab748dd5a6fb42b4c2b83d4e6ad3138ba", null ]
 ];

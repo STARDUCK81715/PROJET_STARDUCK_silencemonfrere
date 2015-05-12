@@ -15,6 +15,12 @@
 
 public class ElevatorProject
 {
+
+    /**
+     * \brief Le temps entre deux update
+     */
+    static short LAG_TIME = 200 ; 
+
     /**    
      * \brief Compte le temps ecoule depuis le debut de la simulation en accord avec le sujet
      */
@@ -395,7 +401,7 @@ public class ElevatorProject
 		loopTime =  System.currentTimeMillis();
 		
 		// We update the data (and the appearing ratio) every second
-		if(toSecond >= Defines.LAG_TIME) 
+		if(toSecond >= LAG_TIME) 
 		    {
 			update(building); 
 			toSecond = 0; // Reinit to 0 the time passed

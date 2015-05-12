@@ -272,7 +272,7 @@ public class Graphics
 	rectangle.y = yOffset + Defines.FLOOR_HEIGHT * (position); // POSITION * FLOORS_HEIGH
 
 	// INTERPOLATING
-	double x = dt / (float)Defines.LAG_TIME; // x as f(x) = interpolate(x)
+	double x = dt / (float)ElevatorProject.LAG_TIME; // x as f(x) = interpolate(x)
 	double interpolation = 1 * x;
 
 	// if the elevator is moving 
@@ -502,6 +502,7 @@ public class Graphics
 
 	// Draws
 	int starRadius = 1;
+	window.setColor(255, 255, 255);
 	window.fillCircle(x, (int)star.y + (int)star.offset, starRadius);	
     }
 
@@ -562,7 +563,7 @@ public class Graphics
 	else
 	    { 
 		/* update on the elevator drawing in order to calculate only once */ 
-		double interpolation =  (building.elevator.canGo) ? dt/(float)Defines.LAG_TIME * (float)building.elevator.direction   : 0 ;
+		double interpolation =  (building.elevator.canGo) ? dt/(float)ElevatorProject.LAG_TIME * (float)building.elevator.direction   : 0 ;
 		yOffset =  ( interpolation + (float)building.elevator.positionByHeight) / (float)Defines.FLOOR_HEIGHT_METERS * (float)Defines.FLOOR_HEIGHT -   (float)Defines.WINDOW_SIZE / 3.0;
 	    }
 	//

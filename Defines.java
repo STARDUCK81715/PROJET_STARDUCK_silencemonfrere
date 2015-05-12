@@ -54,7 +54,7 @@ public class Defines
      * \brief Le temps entre deux update
      */
     // TO TEST
-    final static short LAG_TIME = 200 ; 
+    final static short LAG_TIME = 500 ; 
     
     /* VISUAL */ 
     

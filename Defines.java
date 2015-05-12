@@ -49,7 +49,6 @@ public class Defines
      * \brief Temps a attendre pour chaque mouvement de passager
      */
     final static short WAITING_TIME_PER_PASSENGER = 1000; 
-    
     /* VISUAL */ 
     
     /**

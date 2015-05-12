@@ -564,7 +564,8 @@ public class Graphics
 	    { 
 		/* update on the elevator drawing in order to calculate only once */ 
 		double interpolation =  (building.elevator.canGo) ? dt/(float)ElevatorProject.LAG_TIME * (float)building.elevator.direction   : 0 ;
-		yOffset =  ( interpolation + (float)building.elevator.positionByHeight) / (float)Defines.FLOOR_HEIGHT_METERS * (float)Defines.FLOOR_HEIGHT -   (float)Defines.WINDOW_SIZE / 3.0;
+
+		yOffset =(  ( interpolation + (float)building.elevator.positionByHeight) / (float)Defines.FLOOR_HEIGHT_METERS  * (float)Defines.FLOOR_HEIGHT - ((float)Defines.FLOOR_HEIGHT*(float)building.elevator.waitingList.length) + (float)Defines.WINDOW_SIZE / 3.0 ) ;
 	    }
 	//
 

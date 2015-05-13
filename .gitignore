@@ -13,4 +13,12 @@ hs_err_pid*
 *~
 
 #projet 
-*.class
+*$*.class
+Graphics.class
+ElevatorProject.class
+Interface.class
+*tex
+*aux
+*log
+*txt
+#*

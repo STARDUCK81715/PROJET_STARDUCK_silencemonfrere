@@ -91,7 +91,8 @@ public class Graphics
 
 	// We decided to put the stars only behind a strict number of floors, to keep some consistency about the style.
 	// (3 is the number of floors which might have stars behind it. Defining a constant could be too much for this) 
-	double y = Math.random() * Defines.FLOOR_HEIGHT * 3;
+	double y = (Math.random() - 0.5) * Defines.FLOOR_HEIGHT * 6;
+
 
 	// This attribute allows a point to be "constant" like the stars over the first three floors
 	double offset = -1;
@@ -462,6 +463,7 @@ public class Graphics
 	for(int i = 0; i < stars.length; i++)
 	    {
 		stars[i] = new Point();
+		Ecran.afficherln(stars[i].y);
 	    }
     }
 

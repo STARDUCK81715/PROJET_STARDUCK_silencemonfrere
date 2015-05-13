@@ -19,7 +19,7 @@ public class ElevatorProject
     /**
      * \brief Le temps entre deux update
      */
-    static short LAG_TIME = 200 ; 
+    static short LAG_TIME = 1000 ; 
 
     /**    
      * \brief Compte le temps ecoule depuis le debut de la simulation en accord avec le sujet
@@ -66,7 +66,7 @@ public class ElevatorProject
      */
     static class Floor
     {
-	double probability = Math.random() / 10.0; // Probability that someone appears
+	double probability = Math.random(); // Probability that someone appears
         short passengers = 0; // Number of passenger waiting
     };
       
